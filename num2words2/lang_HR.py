@@ -130,7 +130,7 @@ class Num2Word_HR(Num2Word_Base):
         """
         Croatian pluralization rules:
         - 1: singular form (1 kuna)
-        - 2,3,4: paucal form (2,3,4 kune) 
+        - 2,3,4: paucal form (2,3,4 kune)
         - 5+ and numbers ending in 11,12,13,14: plural form (5 kuna, 11 kuna)
         """
         if number % 100 in [11, 12, 13, 14]:

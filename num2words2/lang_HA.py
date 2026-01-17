@@ -23,7 +23,7 @@ from .base import Num2Word_Base
 class Num2Word_HA(Num2Word_Base):
     """
     Hausa number-to-words converter.
-    
+
     Supports cardinal numbers, ordinal numbers, currency conversion,
     and year representation in Hausa language.
     """
@@ -128,7 +128,7 @@ class Num2Word_HA(Num2Word_Base):
                 result = "ɗari"
             else:
                 result = "ɗari " + self.ONES[hundreds]
-            
+
             if remainder > 0:
                 if remainder < 10:
                     result += " da " + self._int_to_hausa(remainder)
@@ -141,7 +141,7 @@ class Num2Word_HA(Num2Word_Base):
             if number >= scale_value:
                 quotient, remainder = divmod(number, scale_value)
                 result = ""
-                
+
                 if scale_value == 100:
                     if quotient == 1:
                         result = "ɗari"
@@ -159,13 +159,13 @@ class Num2Word_HA(Num2Word_Base):
                         result = scale_name
                     else:
                         result = scale_name + " " + self._int_to_hausa(quotient)
-                
+
                 if remainder > 0:
                     if remainder < 10:
                         result += " da " + self._int_to_hausa(remainder)
                     else:
                         result += " " + self._int_to_hausa(remainder)
-                
+
                 return result
 
         return str(number)  # Fallback for very large numbers
@@ -174,7 +174,7 @@ class Num2Word_HA(Num2Word_Base):
         """Convert a number to its Hausa ordinal representation."""
         if value == 1:
             return "na farko"
-        
+
         cardinal = self.to_cardinal(value)
         return "na " + cardinal
 
@@ -193,7 +193,7 @@ class Num2Word_HA(Num2Word_Base):
                 suffix = "rd"
             else:
                 suffix = "th"
-        
+
         return str(value) + suffix
 
     def to_year(self, value):
@@ -263,10 +263,10 @@ class Num2Word_HA(Num2Word_Base):
 
         # Get decimal digits
         decimal_str = str(decimal_part)[2:]  # Remove "0."
-        
+
         result = self.to_cardinal(integer_part)
         result += " " + self.pointword + " "
-        
+
         # Convert decimal digits
         decimal_num = int(decimal_str)
         result += self.to_cardinal(decimal_num)

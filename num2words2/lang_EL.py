@@ -29,7 +29,7 @@ class Num2Word_EL(Num2Word_EU):
 
     def setup(self):
         Num2Word_EU.setup(self)
-        
+
         self.negword = "μείον "
         self.pointword = "κόμμα"
         self.errmsg_nonnum = (
@@ -63,7 +63,7 @@ class Num2Word_EL(Num2Word_EU):
         # Ordinal numbers mapping
         self.ordinals = {
             "ένα": "πρώτος",
-            "δύο": "δεύτερος", 
+            "δύο": "δεύτερος",
             "τρία": "τρίτος",
             "τέσσερα": "τέταρτος",
             "πέντε": "πέμπτος",
@@ -204,12 +204,12 @@ class Num2Word_EL(Num2Word_EU):
     def to_ordinal(self, value):
         self.verify_ordinal(value)
         word = self.to_cardinal(value)
-        
+
         # Handle special cases first
         for cardinal, ordinal in self.ordinals.items():
             if word == cardinal:
                 return ordinal
-        
+
         # Handle special compound numbers
         if word == "δεκατέσσερα":
             return "δεκατέταρτος"
@@ -217,11 +217,11 @@ class Num2Word_EL(Num2Word_EU):
             return "δεκατρίτος"
         elif word == "ένα εκατομμύριο":
             return "εκατομμυριοστός"
-        
+
         # Handle compound ordinals
         parts = word.split()
         if len(parts) > 1:
-            # Handle "είκοσι ένα" -> "εικοστός πρώτος" 
+            # Handle "είκοσι ένα" -> "εικοστός πρώτος"
             if parts[0] == "είκοσι" and parts[1] == "ένα":
                 return "εικοστός πρώτος"
             elif parts[0] == "είκοσι" and parts[1] in self.ordinals:
@@ -231,7 +231,7 @@ class Num2Word_EL(Num2Word_EU):
                 return "εκατοστός πρώτος"
             elif parts[0] == "εκατό" and parts[1] in self.ordinals:
                 return "εκατοστός " + self.ordinals[parts[1]]
-            
+
             # For compound numbers, make only the last part ordinal
             last_part = parts[-1]
             if last_part in self.ordinals:
@@ -246,7 +246,7 @@ class Num2Word_EL(Num2Word_EU):
             elif last_part == "τέσσερα":
                 parts[-1] = "τέταρτος"
                 return " ".join(parts)
-        
+
         # Default ordinal formation
         if word.endswith("α"):
             return word[:-1] + "ος"

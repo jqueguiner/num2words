@@ -37,7 +37,7 @@ class Num2Word_AF(Num2Word_EU):
 
         self.negword = "minus "
         self.pointword = "komma"
-        
+
         # Error messages in Afrikaans
         self.errmsg_floatord = (
             "Kan nie die desimale getal %s as 'n ordinale getal behandel nie."
@@ -81,7 +81,7 @@ class Num2Word_AF(Num2Word_EU):
             "een": "eerst",
             "twee": "tweed",
             "drie": "derd",
-            "vier": "vierd", 
+            "vier": "vierd",
             "vyf": "vyfd",
             "ses": "sesd",
             "sewe": "sewend",
@@ -90,7 +90,7 @@ class Num2Word_AF(Num2Word_EU):
             "tien": "tiend",
             "elf": "elfd",
             "twaalf": "twaalfd",
-            
+
             # Compound endings
             "ig": "igst",
             "erd": "erdst",
@@ -135,13 +135,13 @@ class Num2Word_AF(Num2Word_EU):
     def to_ordinal(self, value):
         self.verify_ordinal(value)
         outword = self.to_cardinal(value)
-        
+
         # Handle special compound ordinals
         for key in self.ords:
             if outword.endswith(key):
                 outword = outword[:len(outword) - len(key)] + self.ords[key]
                 break
-        
+
         return outword + "e"
 
     def to_ordinal_num(self, value):

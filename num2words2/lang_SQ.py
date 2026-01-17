@@ -37,7 +37,7 @@ class Num2Word_SQ(Num2Word_Base):
         self.exclude_title = ["e", "presje", "minus"]
 
         self.high_numwords = ["trilion", "miliard", "milion"]
-        
+
         self.mid_numwords = [
             (1000, "mijë"),
             (100, "qind"),
@@ -50,12 +50,12 @@ class Num2Word_SQ(Num2Word_Base):
             (30, "tridhjetë"),
             (20, "njëzet"),
         ]
-        
+
         self.low_numwords = [
             "nëntëmbëdhjetë",  # 19
             "tetëmbëdhjetë",   # 18
-            "shtatëmbëdhjetë", # 17
-            "gjashtëmbëdhjetë",# 16
+            "shtatëmbëdhjetë",  # 17
+            "gjashtëmbëdhjetë",  # 16
             "pesëmbëdhjetë",   # 15
             "katërmbëdhjetë",  # 14
             "trembëdhjetë",    # 13
@@ -78,7 +78,7 @@ class Num2Word_SQ(Num2Word_Base):
         self.ordinal_forms = {
             0: "i zeroi",
             1: "i pari",
-            2: "i dyti", 
+            2: "i dyti",
             3: "i treti",
             4: "i katërti",
             5: "i pesti",
@@ -159,7 +159,7 @@ class Num2Word_SQ(Num2Word_Base):
 
     def to_ordinal_num(self, value):
         self.verify_ordinal(value)
-        
+
         # Albanian ordinal suffixes based on ending
         if value % 10 == 1 and value % 100 != 11:
             suffix = "-shi"
@@ -169,24 +169,24 @@ class Num2Word_SQ(Num2Word_Base):
             suffix = "-ti"
         else:
             suffix = "-ti"
-            
+
         return str(value) + suffix
 
     def pluralize(self, n, forms):
         """Albanian plural rules"""
         if not forms:
             return ''
-            
+
         if len(forms) == 1:
             return forms[0]
-            
+
         if len(forms) >= 2:
             # In Albanian, use singular for 1, plural for everything else
             if n == 1:
                 return forms[0]
             else:
                 return forms[1]
-                
+
         return forms[0]
 
     def to_currency(self, val, currency='ALL', cents=True, separator=',',
