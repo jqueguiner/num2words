@@ -20,13 +20,11 @@ from io import open
 
 from setuptools import find_packages, setup
 
-PACKAGE_NAME = "num2words"
+PACKAGE_NAME = "num2words2"
 
 CLASSIFIERS = [
     'Development Status :: 5 - Production/Stable',
     'Intended Audience :: Developers',
-    'License :: OSI Approved :: GNU Library or Lesser General Public License '
-    '(LGPL)',
     'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
@@ -62,23 +60,23 @@ def find_version(fname):
 
 setup(
     name=PACKAGE_NAME,
-    version=find_version("bin/num2words"),
-    description='Modules to convert numbers to words. Easily extensible.',
+    version=find_version("bin/num2words2"),
+    description='Enhanced modules to convert numbers to words. Fork of num2words with additional language support and fixes.',
     long_description=LONG_DESC,
     long_description_content_type="text/markdown",
     license='LGPL',
-    author='Taro Ogawa <tso at users sourceforge net>',
-    author_email='tos@users.sourceforge.net',
-    maintainer='Savoir-faire Linux inc.',
-    maintainer_email='support@savoirfairelinux.com',
+    author='Jean-Louis Queguiner',
+    author_email='jean-louis.queguiner@gmail.com',
+    maintainer='Jean-Louis Queguiner',
+    maintainer_email='jean-louis.queguiner@gmail.com',
     keywords=' number word numbers words convert conversion i18n '
              'localisation localization internationalisation '
              'internationalization',
-    url='https://github.com/savoirfairelinux/num2words',
+    url='https://github.com/jqueguiner/num2words',
     packages=find_packages(exclude=['tests']),
     test_suite='tests',
     classifiers=CLASSIFIERS,
-    scripts=['bin/num2words'],
+    scripts=['bin/num2words2'],
     install_requires=["docopt>=0.6.2"],
     tests_require=['delegator.py'],
 )
