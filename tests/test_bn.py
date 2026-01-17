@@ -20,15 +20,15 @@ from __future__ import unicode_literals
 from decimal import Decimal
 from unittest import TestCase
 
-from num2words import num2words
-from num2words.lang_BN import Num2Word_BN, NumberTooLargeError
+from num2words2 import num2words
+from num2words2.lang_BN import Num2Word_BN, NumberTooLargeError
 
 
 class Num2WordsBNTest(TestCase):
     maxDiff = None
 
     def test_negative(self):
-        self.assertEqual(num2words(-1, lang="bn"), u'এক')
+        self.assertEqual(num2words(-1, lang="bn"), u'ঋণাত্মক এক')
 
     def test_0(self):
         self.assertEqual(num2words(0, lang="bn"), u'শূন্য')

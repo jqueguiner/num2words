@@ -16,7 +16,7 @@
 # MA 02110-1301 USA
 
 
-from num2words.currency import parse_currency_parts
+from num2words2.currency import parse_currency_parts
 
 from .lang_EU import Num2Word_EU
 
