@@ -47,6 +47,7 @@ setup(
     description='Modern, actively maintained fork of num2words optimized for LLM/AI/speech applications.',
     long_description=LONG_DESC,
     long_description_content_type="text/markdown",
+    license='LGPL-2.1',
     author='Jean-Louis Queguiner',
     author_email='jean-louis.queguiner@gmail.com',
     maintainer='Jean-Louis Queguiner',
