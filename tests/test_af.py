@@ -55,6 +55,7 @@ TEST_CASES_TO_CURRENCY_USD = (
     (100.00, 'een honderd dollar en nul sent'),
 )
 
+
 class Num2WordsAFTest(TestCase):
 
     def test_cardinal_basic_numbers(self):
