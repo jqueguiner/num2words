@@ -1,26 +1,31 @@
-# This workflow will upload a Python Package using Twine when code is merged to master
-# and all tests pass successfully
-
-name: Upload Python Package
+# Manual workflow to publish to PyPI
+name: Manual PyPI Publish
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
-    branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      version_increment:
+        description: 'Version increment type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+        - patch
+        - minor
+        - major
 
 permissions:
-  contents: write  # Need write permission for version commits
+  contents: write
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
-    # Only run if CI workflow completed successfully
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
+    
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -37,27 +42,29 @@ jobs:
         VERSION=$(python -c "import re; print(re.search(r'__version__ = [\"\'](.*?)[\"\']', open('bin/num2words2').read()).group(1))")
         echo "current_version=$VERSION" >> $GITHUB_OUTPUT
         
-    - name: Check if version exists on PyPI
-      id: check_version
-      run: |
-        if pip index versions num2words2 2>/dev/null | grep -q "${{ steps.get_version.outputs.current_version }}"; then
-          echo "version_exists=true" >> $GITHUB_OUTPUT
-        else
-          echo "version_exists=false" >> $GITHUB_OUTPUT
-        fi
-        
-    - name: Auto-increment version
-      if: steps.check_version.outputs.version_exists == 'true'
+    - name: Increment version
       run: |
         CURRENT_VERSION=${{ steps.get_version.outputs.current_version }}
-        # Extract version parts (assuming format x.y.z)
         IFS='.' read -r -a parts <<< "$CURRENT_VERSION"
         major=${parts[0]}
         minor=${parts[1]}
         patch=${parts[2]}
         
-        # Increment patch version
-        patch=$((patch + 1))
+        case "${{ github.event.inputs.version_increment }}" in
+          "major")
+            major=$((major + 1))
+            minor=0
+            patch=0
+            ;;
+          "minor")
+            minor=$((minor + 1))
+            patch=0
+            ;;
+          "patch")
+            patch=$((patch + 1))
+            ;;
+        esac
+        
         NEW_VERSION="$major.$minor.$patch"
         
         # Update version in bin/num2words2
@@ -69,7 +76,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add bin/num2words2
-        git commit -m "Auto-increment version to $NEW_VERSION [skip ci]" || exit 0
+        git commit -m "Bump version to $NEW_VERSION [skip ci]"
         git push
         
     - name: Build package
