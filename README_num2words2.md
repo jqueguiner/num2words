@@ -160,23 +160,117 @@ And many regional variations like es_CO (Colombian Spanish), pt_BR (Brazilian Po
 
 ## Migration from num2words
 
-`num2words2` is designed as a drop-in replacement for `num2words`. Simply update your imports:
+`num2words2` is designed as a drop-in replacement for `num2words` with full backward compatibility.
+
+### 🤖 Automated Migration (Recommended)
+
+We provide a migration script to automatically update your codebase:
+
+```bash
+# Download and run the migration script
+curl -O https://raw.githubusercontent.com/jqueguiner/num2words/master/migrate_to_num2words2.py
+python migrate_to_num2words2.py /path/to/your/project
+
+# Or just scan current directory
+python migrate_to_num2words2.py .
+
+# Dry run to see what would change (recommended first step)
+python migrate_to_num2words2.py --dry-run .
+```
+
+The script will:
+- 🔍 Find all Python files with `num2words` imports
+- 💾 Create backups of original files
+- 🔄 Update imports to use `num2words2`
+- 📝 Provide a detailed summary of changes
+
+### 📝 Manual Migration
+
+If you prefer manual migration, simply update your imports:
 
 ```python
 # Before
 from num2words import num2words
 
-# After
+# After  
 from num2words2 import num2words
 ```
 
-Or if you want to maintain compatibility:
+For backward compatibility during transition:
 
 ```python
 try:
     from num2words2 import num2words
 except ImportError:
     from num2words import num2words
+```
+
+### 📦 Update Dependencies
+
+Update your dependency files:
+
+```bash
+# requirements.txt
+- num2words>=0.5.12
++ num2words2>=0.5.15
+
+# pyproject.toml
+dependencies = [
+-    "num2words>=0.5.12",
++    "num2words2>=0.5.15",
+]
+
+# setup.py
+install_requires=[
+-    "num2words>=0.5.12",
++    "num2words2>=0.5.15",
+],
+```
+
+### 🧪 Testing Your Migration
+
+After migration, test your application:
+
+```python
+# Test basic functionality
+from num2words2 import num2words
+
+# These should work exactly as before
+assert num2words(42) == "forty-two"
+assert num2words(42, lang='es') == "cuarenta y dos"
+assert num2words(42, to='ordinal') == "forty-second"
+```
+
+### 🚀 Installation
+
+```bash
+# Install num2words2
+pip install num2words2
+
+# If you were using num2words, you can remove it
+pip uninstall num2words
+```
+
+### ⚠️ Breaking Changes
+
+`num2words2` maintains full backward compatibility. However, if you experience any issues:
+
+1. **Check version compatibility** - Ensure you're using `num2words2>=0.5.15`
+2. **Report issues** - Create an issue at https://github.com/jqueguiner/num2words/issues
+3. **Rollback if needed** - The migration script creates backups for easy rollback
+
+### 🔄 Rollback Migration
+
+If you need to rollback:
+
+```bash
+# The migration script creates .num2words_backup files
+# Restore them if needed
+for file in $(find . -name "*.num2words_backup"); do
+    original="${file%.num2words_backup}"
+    cp "$file" "$original"
+    echo "Restored $original"
+done
 ```
 
 ## Development

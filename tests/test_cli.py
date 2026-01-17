@@ -23,14 +23,14 @@ import unittest
 
 import delegator
 
-import num2words2
+import num2words2 as num2words
 
 
 class CliCaller(object):
 
     def __init__(self):
         self.cmd = os.path.realpath(os.path.join(os.path.dirname(__file__),
-                                    "..", "bin", "num2words"))
+                                    "..", "bin", "num2words2"))
         self.cmd_list = ["python", self.cmd]
 
     def run_cmd(self, *args):
