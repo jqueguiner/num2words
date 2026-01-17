@@ -170,7 +170,7 @@ class Num2Word_SW(Num2Word_Base):
         """
         # Import the parse function from the base currency module
         from .currency import parse_currency_parts
-        
+
         # For Swahili, treat integers as whole currency units, not cents
         left, right, is_negative = parse_currency_parts(val, is_int_with_cents=False)
 

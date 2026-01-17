@@ -274,7 +274,7 @@ class Num2Word_EL(Num2Word_EU):
     def to_currency(self, val, currency='EUR', cents=True, separator=' και',
                     adjective=False):
         from .currency import parse_currency_parts, prefix_currency
-        
+
         # Fix the currency parsing issue - integers should be treated as whole units
         if isinstance(val, int):
             left, right, is_negative = parse_currency_parts(val, is_int_with_cents=False)
