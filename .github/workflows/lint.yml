@@ -27,22 +27,22 @@ jobs:
     
     - name: Check code formatting with Black
       run: |
-        black --check --diff num2words tests
+        black --check --diff num2words2 tests
       continue-on-error: true
     
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        flake8 num2words tests --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 num2words2 tests --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 num2words tests --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        flake8 num2words2 tests --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     
     - name: Check import sorting with isort
       run: |
-        isort --check-only --diff num2words tests
+        isort --check-only --diff num2words2 tests
       continue-on-error: true
     
     - name: Type checking with mypy
       run: |
-        mypy num2words --ignore-missing-imports
+        mypy num2words2 --ignore-missing-imports
       continue-on-error: true
