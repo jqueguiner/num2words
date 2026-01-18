@@ -2,6 +2,7 @@
 # Additional coverage tests for Estonian language
 
 from unittest import TestCase
+
 from num2words2 import num2words
 from num2words2.lang_ET import Num2Word_ET
 
@@ -25,7 +26,7 @@ class Num2WordsETCoverageTest(TestCase):
     def test_pluralize_method(self):
         """Test the pluralize method - not implemented in Estonian."""
         converter = Num2Word_ET()
-        # Estonian doesn't implement pluralize, it raises NotImplementedError  
+        # Estonian doesn't implement pluralize, it raises NotImplementedError
         with self.assertRaises(NotImplementedError):
             converter.pluralize(1, 'test')
 

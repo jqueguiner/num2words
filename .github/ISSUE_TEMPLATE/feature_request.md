@@ -21,7 +21,7 @@ If this is a request for a new language:
 - Language name:
 - ISO 639-1 code:
 - Example numbers and their text representation:
-  - 1: 
+  - 1:
   - 10:
   - 100:
   - 1000:

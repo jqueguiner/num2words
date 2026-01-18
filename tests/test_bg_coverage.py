@@ -2,6 +2,7 @@
 # Additional coverage tests for Bulgarian language
 
 from unittest import TestCase
+
 from num2words2 import num2words
 from num2words2.lang_BG import Num2Word_BG
 
@@ -25,15 +26,15 @@ class Num2WordsBGCoverageTest(TestCase):
     def test_int_to_word_with_gender(self):
         """Test _int_to_word with different genders."""
         converter = Num2Word_BG()
-        
+
         # Test neuter (default for 1 in cardinal context)
         result = converter._int_to_word(1)
         self.assertEqual(result, 'едно')
-        
+
         # Test masculine by forcing ordinal context
         result = converter._int_to_ordinal(1)
         self.assertEqual(result, 'първи')
-        
+
         # Test with 2 (feminine by default in cardinal)
         result = converter._int_to_word(2)
         self.assertEqual(result, 'две')
@@ -41,11 +42,11 @@ class Num2WordsBGCoverageTest(TestCase):
     def test_int_to_word_thousands_special(self):
         """Test special cases for thousands."""
         converter = Num2Word_BG()
-        
+
         # Test 2000 with feminine gender (хиляди is feminine)
         result = converter._int_to_word(2000)
         self.assertEqual(result, 'две хиляди')
-        
+
         # Test numbers ending in 2-9 thousands
         result = converter._int_to_word(3000)
         self.assertEqual(result, 'три хиляди')
@@ -87,15 +88,15 @@ class Num2WordsBGCoverageTest(TestCase):
         # Test numbers ending in 1
         self.assertEqual(num2words(31, lang='bg', to='ordinal_num'), '31-ви')
         self.assertEqual(num2words(41, lang='bg', to='ordinal_num'), '41-ви')
-        
+
         # Test numbers ending in 2
         self.assertEqual(num2words(32, lang='bg', to='ordinal_num'), '32-ри')
         self.assertEqual(num2words(42, lang='bg', to='ordinal_num'), '42-ри')
-        
+
         # Test numbers ending in 7, 8
         self.assertEqual(num2words(27, lang='bg', to='ordinal_num'), '27-ми')
         self.assertEqual(num2words(28, lang='bg', to='ordinal_num'), '28-ми')
-        
+
         # Numbers ending in 00
         self.assertEqual(num2words(200, lang='bg', to='ordinal_num'), '200-ти')
 
@@ -126,13 +127,13 @@ class Num2WordsBGCoverageTest(TestCase):
             num2words(1.00, lang='bg', to='currency', currency='BGN'),
             'един лев'
         )
-        
+
         # Test 1 stotinka (singular feminine)
         self.assertEqual(
             num2words(0.01, lang='bg', to='currency', currency='BGN'),
             'нула лева и една стотинка'
         )
-        
+
         # Test 2 stotinki (dual form)
         self.assertEqual(
             num2words(0.02, lang='bg', to='currency', currency='BGN'),

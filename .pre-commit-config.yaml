@@ -1,0 +1,45 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--float-to-top", "--skip=num2words2/_version.py"]
+
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v2.2.1
+    hooks:
+      - id: autoflake
+        args: [
+          "--in-place",
+          "--remove-unused-variables",
+          "--remove-all-unused-imports",
+          "--expand-star-imports",
+          "--ignore-init-module-imports"
+        ]
+
+  - repo: https://github.com/hhatto/autopep8
+    rev: v2.0.4
+    hooks:
+      - id: autopep8
+        args: ["--in-place", "--max-line-length=79", "--ignore=E501"]
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 5.0.4
+    hooks:
+      - id: flake8
+        args: [
+          "--exclude=num2words2/_version.py",
+          "--extend-ignore=E501",
+          "--per-file-ignores=tests/*:E501,W293,W292",
+          "--max-line-length=79"
+        ]
+        additional_dependencies: [flake8-copyright]

@@ -2,6 +2,7 @@
 # Additional coverage tests for Malay language
 
 from unittest import TestCase
+
 from num2words2 import num2words
 from num2words2.lang_MS import Num2Word_MS
 

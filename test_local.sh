@@ -31,57 +31,57 @@ echo "=================================="
 # Function to test with pyenv
 test_with_pyenv() {
     echo -e "${BLUE}📦 Testing with pyenv${NC}"
-    
+
     # Check if pyenv is available
     if ! command -v pyenv &> /dev/null; then
         echo -e "${RED}❌ pyenv not found. Please install pyenv first.${NC}"
         echo "Install: curl https://pyenv.run | bash"
         exit 1
     fi
-    
+
     echo -e "${GREEN}✅ pyenv found: $(pyenv --version)${NC}"
-    
+
     # Get available versions
     available_versions=$(pyenv versions --bare | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | cut -d. -f1,2 | sort -u)
-    
+
     success_count=0
     fail_count=0
-    
+
     for version in "${PYTHON_VERSIONS[@]}"; do
         echo ""
         echo -e "${YELLOW}🧪 Testing Python ${version}${NC}"
         echo "------------------------"
-        
+
         # Check if version is available
         if echo "$available_versions" | grep -q "^${version}$"; then
             # Find the latest patch version
             latest_patch=$(pyenv versions --bare | grep -E "^${version}\.[0-9]+$" | sort -V | tail -1)
-            
+
             if [ -n "$latest_patch" ]; then
                 echo -e "Using Python ${latest_patch}"
-                
+
                 # Create temp directory and test
                 temp_dir=$(mktemp -d)
                 cp -r . "$temp_dir/num2words2"
                 cd "$temp_dir/num2words2"
-                
+
                 # Set local Python version
                 pyenv local "$latest_patch"
-                
+
                 # Create virtual environment
                 echo "📦 Creating virtual environment..."
                 python -m venv venv
                 source venv/bin/activate
-                
+
                 # Install package and test dependencies
                 echo "📦 Installing package..."
                 pip install --upgrade pip > /dev/null 2>&1
                 pip install -e . > /dev/null 2>&1
-                
+
                 if [ -f requirements-test.txt ]; then
                     pip install -r requirements-test.txt > /dev/null 2>&1
                 fi
-                
+
                 # Run tests
                 echo "🧪 Running tests..."
                 if python -m pytest tests/ -q; then
@@ -91,7 +91,7 @@ test_with_pyenv() {
                     echo -e "${RED}❌ Python ${version}: FAILED${NC}"
                     ((fail_count++))
                 fi
-                
+
                 # Cleanup
                 deactivate
                 cd - > /dev/null
@@ -106,13 +106,13 @@ test_with_pyenv() {
             ((fail_count++))
         fi
     done
-    
+
     echo ""
     echo "=================================="
     echo -e "${BLUE}📊 PYENV TESTING SUMMARY${NC}"
     echo -e "${GREEN}✅ Passed: ${success_count}${NC}"
     echo -e "${RED}❌ Failed: ${fail_count}${NC}"
-    
+
     if [ $fail_count -eq 0 ]; then
         echo -e "${GREEN}🎉 All tests passed!${NC}"
         return 0
@@ -124,15 +124,15 @@ test_with_pyenv() {
 # Function to test with tox
 test_with_tox() {
     echo -e "${BLUE}📦 Testing with tox${NC}"
-    
+
     # Check if tox is available
     if ! command -v tox &> /dev/null; then
         echo -e "${YELLOW}⚠️  tox not found. Installing...${NC}"
         pip install tox
     fi
-    
+
     echo -e "${GREEN}✅ tox found: $(tox --version)${NC}"
-    
+
     echo "🧪 Running tox tests..."
     if tox; then
         echo -e "${GREEN}🎉 All tox tests passed!${NC}"
@@ -146,23 +146,23 @@ test_with_tox() {
 # Function to test with docker
 test_with_docker() {
     echo -e "${BLUE}📦 Testing with Docker${NC}"
-    
+
     # Check if docker is available
     if ! command -v docker &> /dev/null; then
         echo -e "${RED}❌ Docker not found. Please install Docker first.${NC}"
         exit 1
     fi
-    
+
     echo -e "${GREEN}✅ Docker found: $(docker --version)${NC}"
-    
+
     success_count=0
     fail_count=0
-    
+
     for version in "${PYTHON_VERSIONS[@]}"; do
         echo ""
         echo -e "${YELLOW}🧪 Testing Python ${version} with Docker${NC}"
         echo "--------------------------------"
-        
+
         # Create Dockerfile
         cat > Dockerfile.test << EOF
 FROM python:${version}-slim
@@ -187,10 +187,10 @@ RUN if [ -f requirements-test.txt ]; then pip install -r requirements-test.txt; 
 # Run tests
 CMD ["python", "-m", "pytest", "tests/", "-v"]
 EOF
-        
+
         # Build and run
         image_name="num2words2-test-py$(echo $version | tr -d '.')"
-        
+
         echo "🔨 Building Docker image..."
         if docker build -f Dockerfile.test -t "$image_name" . > /dev/null 2>&1; then
             echo "🧪 Running tests..."
@@ -201,24 +201,24 @@ EOF
                 echo -e "${RED}❌ Python ${version}: FAILED${NC}"
                 ((fail_count++))
             fi
-            
+
             # Cleanup image
             docker rmi "$image_name" > /dev/null 2>&1
         else
             echo -e "${RED}❌ Failed to build image for Python ${version}${NC}"
             ((fail_count++))
         fi
-        
+
         # Cleanup Dockerfile
         rm -f Dockerfile.test
     done
-    
+
     echo ""
     echo "=================================="
     echo -e "${BLUE}📊 DOCKER TESTING SUMMARY${NC}"
     echo -e "${GREEN}✅ Passed: ${success_count}${NC}"
     echo -e "${RED}❌ Failed: ${fail_count}${NC}"
-    
+
     if [ $fail_count -eq 0 ]; then
         echo -e "${GREEN}🎉 All tests passed!${NC}"
         return 0
