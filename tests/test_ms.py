@@ -33,7 +33,7 @@ class Num2WordsMSTest(TestCase):
         self.assertEqual(num2words(7, lang='ms'), 'tujuh')
         self.assertEqual(num2words(8, lang='ms'), 'lapan')
         self.assertEqual(num2words(9, lang='ms'), 'sembilan')
-        
+
     def test_cardinal_tens(self):
         """Test tens in Malay."""
         self.assertEqual(num2words(10, lang='ms'), 'sepuluh')
@@ -54,7 +54,7 @@ class Num2WordsMSTest(TestCase):
         self.assertEqual(num2words(70, lang='ms'), 'tujuh puluh')
         self.assertEqual(num2words(80, lang='ms'), 'lapan puluh')
         self.assertEqual(num2words(90, lang='ms'), 'sembilan puluh')
-        
+
     def test_cardinal_compound_tens(self):
         """Test compound numbers with tens."""
         self.assertEqual(num2words(21, lang='ms'), 'dua puluh satu')
@@ -63,7 +63,7 @@ class Num2WordsMSTest(TestCase):
         self.assertEqual(num2words(67, lang='ms'), 'enam puluh tujuh')
         self.assertEqual(num2words(89, lang='ms'), 'lapan puluh sembilan')
         self.assertEqual(num2words(99, lang='ms'), 'sembilan puluh sembilan')
-        
+
     def test_cardinal_hundreds(self):
         """Test hundreds in Malay."""
         self.assertEqual(num2words(100, lang='ms'), 'seratus')
@@ -75,17 +75,22 @@ class Num2WordsMSTest(TestCase):
         self.assertEqual(num2words(700, lang='ms'), 'tujuh ratus')
         self.assertEqual(num2words(800, lang='ms'), 'lapan ratus')
         self.assertEqual(num2words(900, lang='ms'), 'sembilan ratus')
-        
+
     def test_cardinal_complex_hundreds(self):
         """Test complex numbers with hundreds."""
         self.assertEqual(num2words(101, lang='ms'), 'seratus satu')
         self.assertEqual(num2words(111, lang='ms'), 'seratus sebelas')
         self.assertEqual(num2words(212, lang='ms'), 'dua ratus dua belas')
-        self.assertEqual(num2words(345, lang='ms'), 'tiga ratus empat puluh lima')
-        self.assertEqual(num2words(567, lang='ms'), 'lima ratus enam puluh tujuh')
-        self.assertEqual(num2words(891, lang='ms'), 'lapan ratus sembilan puluh satu')
-        self.assertEqual(num2words(999, lang='ms'), 'sembilan ratus sembilan puluh sembilan')
-        
+        self.assertEqual(num2words(345,
+                         lang='ms'), 'tiga ratus empat puluh lima')
+        self.assertEqual(num2words(567,
+                         lang='ms'), 'lima ratus enam puluh tujuh')
+        self.assertEqual(
+            num2words(891, lang='ms'), 'lapan ratus sembilan puluh satu')
+        self.assertEqual(
+            num2words(999, lang='ms'),
+            'sembilan ratus sembilan puluh sembilan')
+
     def test_cardinal_thousands(self):
         """Test thousands in Malay."""
         self.assertEqual(num2words(1000, lang='ms'), 'seribu')
@@ -96,10 +101,10 @@ class Num2WordsMSTest(TestCase):
         self.assertEqual(num2words(15000, lang='ms'), 'lima belas ribu')
         self.assertEqual(num2words(25000, lang='ms'), 'dua puluh lima ribu')
         self.assertEqual(num2words(100000, lang='ms'), 'seratus ribu')
-        self.assertEqual(num2words(999999, lang='ms'), 
+        self.assertEqual(num2words(999999, lang='ms'),
                          'sembilan ratus sembilan puluh sembilan ribu '
                          'sembilan ratus sembilan puluh sembilan')
-        
+
     def test_cardinal_millions(self):
         """Test millions in Malay."""
         self.assertEqual(num2words(1000000, lang='ms'), 'satu juta')
@@ -110,13 +115,13 @@ class Num2WordsMSTest(TestCase):
                          'seratus dua puluh tiga juta '
                          'empat ratus lima puluh enam ribu '
                          'tujuh ratus lapan puluh sembilan')
-        
+
     def test_cardinal_billions(self):
         """Test billions in Malay."""
         self.assertEqual(num2words(1000000000, lang='ms'), 'satu bilion')
         self.assertEqual(num2words(2000000000, lang='ms'), 'dua bilion')
         self.assertEqual(num2words(5000000000, lang='ms'), 'lima bilion')
-        
+
     def test_negative_numbers(self):
         """Test negative numbers in Malay."""
         self.assertEqual(num2words(-1, lang='ms'), 'negatif satu')
@@ -124,7 +129,7 @@ class Num2WordsMSTest(TestCase):
         self.assertEqual(num2words(-25, lang='ms'), 'negatif dua puluh lima')
         self.assertEqual(num2words(-100, lang='ms'), 'negatif seratus')
         self.assertEqual(num2words(-1000, lang='ms'), 'negatif seribu')
-        
+
     def test_ordinal_basics(self):
         """Test basic ordinal numbers in Malay."""
         self.assertEqual(num2words(1, lang='ms', to='ordinal'), 'pertama')
@@ -137,17 +142,21 @@ class Num2WordsMSTest(TestCase):
         self.assertEqual(num2words(8, lang='ms', to='ordinal'), 'kelapan')
         self.assertEqual(num2words(9, lang='ms', to='ordinal'), 'kesembilan')
         self.assertEqual(num2words(10, lang='ms', to='ordinal'), 'kesepuluh')
-        
+
     def test_ordinal_tens(self):
         """Test ordinal tens in Malay."""
         self.assertEqual(num2words(11, lang='ms', to='ordinal'), 'ke-sebelas')
-        self.assertEqual(num2words(12, lang='ms', to='ordinal'), 'ke-dua belas')
-        self.assertEqual(num2words(20, lang='ms', to='ordinal'), 'ke-dua puluh')
-        self.assertEqual(num2words(30, lang='ms', to='ordinal'), 'ke-tiga puluh')
-        self.assertEqual(num2words(50, lang='ms', to='ordinal'), 'ke-lima puluh')
+        self.assertEqual(num2words(12,
+                         lang='ms', to='ordinal'), 'ke-dua belas')
+        self.assertEqual(num2words(20,
+                         lang='ms', to='ordinal'), 'ke-dua puluh')
+        self.assertEqual(num2words(30,
+                         lang='ms', to='ordinal'), 'ke-tiga puluh')
+        self.assertEqual(num2words(50,
+                         lang='ms', to='ordinal'), 'ke-lima puluh')
         self.assertEqual(num2words(100, lang='ms', to='ordinal'), 'ke-seratus')
         self.assertEqual(num2words(1000, lang='ms', to='ordinal'), 'ke-seribu')
-        
+
     def test_ordinal_num(self):
         """Test ordinal number formatting in Malay."""
         self.assertEqual(num2words(1, lang='ms', to='ordinal_num'), 'ke-1')
@@ -156,7 +165,7 @@ class Num2WordsMSTest(TestCase):
         self.assertEqual(num2words(10, lang='ms', to='ordinal_num'), 'ke-10')
         self.assertEqual(num2words(21, lang='ms', to='ordinal_num'), 'ke-21')
         self.assertEqual(num2words(100, lang='ms', to='ordinal_num'), 'ke-100')
-        
+
     def test_currency(self):
         """Test currency in Malay."""
         self.assertEqual(
@@ -187,18 +196,18 @@ class Num2WordsMSTest(TestCase):
             num2words(5.25, lang='ms', to='currency', currency='SGD'),
             'lima dolar dua puluh lima sen'
         )
-        
+
     def test_year(self):
         """Test year conversion in Malay."""
-        self.assertEqual(num2words(1900, lang='ms', to='year'), 
+        self.assertEqual(num2words(1900, lang='ms', to='year'),
                          'seribu sembilan ratus')
-        self.assertEqual(num2words(1999, lang='ms', to='year'), 
+        self.assertEqual(num2words(1999, lang='ms', to='year'),
                          'seribu sembilan ratus sembilan puluh sembilan')
-        self.assertEqual(num2words(2000, lang='ms', to='year'), 
+        self.assertEqual(num2words(2000, lang='ms', to='year'),
                          'dua ribu')
-        self.assertEqual(num2words(2001, lang='ms', to='year'), 
+        self.assertEqual(num2words(2001, lang='ms', to='year'),
                          'dua ribu satu')
-        self.assertEqual(num2words(2020, lang='ms', to='year'), 
+        self.assertEqual(num2words(2020, lang='ms', to='year'),
                          'dua ribu dua puluh')
-        self.assertEqual(num2words(2023, lang='ms', to='year'), 
+        self.assertEqual(num2words(2023, lang='ms', to='year'),
                          'dua ribu dua puluh tiga')

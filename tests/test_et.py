@@ -33,7 +33,7 @@ class Num2WordsETTest(TestCase):
         self.assertEqual(num2words(7, lang='et'), 'seitse')
         self.assertEqual(num2words(8, lang='et'), 'kaheksa')
         self.assertEqual(num2words(9, lang='et'), 'üheksa')
-        
+
     def test_cardinal_tens(self):
         """Test tens in Estonian."""
         self.assertEqual(num2words(10, lang='et'), 'kümme')
@@ -54,7 +54,7 @@ class Num2WordsETTest(TestCase):
         self.assertEqual(num2words(70, lang='et'), 'seitsekümmend')
         self.assertEqual(num2words(80, lang='et'), 'kaheksakümmend')
         self.assertEqual(num2words(90, lang='et'), 'üheksakümmend')
-        
+
     def test_cardinal_compound_tens(self):
         """Test compound numbers with tens."""
         self.assertEqual(num2words(21, lang='et'), 'kakskümmend üks')
@@ -63,7 +63,7 @@ class Num2WordsETTest(TestCase):
         self.assertEqual(num2words(67, lang='et'), 'kuuskümmend seitse')
         self.assertEqual(num2words(89, lang='et'), 'kaheksakümmend üheksa')
         self.assertEqual(num2words(99, lang='et'), 'üheksakümmend üheksa')
-        
+
     def test_cardinal_hundreds(self):
         """Test hundreds in Estonian."""
         self.assertEqual(num2words(100, lang='et'), 'ükssada')
@@ -75,17 +75,21 @@ class Num2WordsETTest(TestCase):
         self.assertEqual(num2words(700, lang='et'), 'seitsesada')
         self.assertEqual(num2words(800, lang='et'), 'kaheksasada')
         self.assertEqual(num2words(900, lang='et'), 'üheksasada')
-        
+
     def test_cardinal_complex_hundreds(self):
         """Test complex numbers with hundreds."""
         self.assertEqual(num2words(101, lang='et'), 'ükssada üks')
         self.assertEqual(num2words(111, lang='et'), 'ükssada üksteist')
         self.assertEqual(num2words(212, lang='et'), 'kakssada kaksteist')
-        self.assertEqual(num2words(345, lang='et'), 'kolmsada nelikümmend viis')
-        self.assertEqual(num2words(567, lang='et'), 'viissada kuuskümmend seitse')
-        self.assertEqual(num2words(891, lang='et'), 'kaheksasada üheksakümmend üks')
-        self.assertEqual(num2words(999, lang='et'), 'üheksasada üheksakümmend üheksa')
-        
+        self.assertEqual(num2words(345,
+                         lang='et'), 'kolmsada nelikümmend viis')
+        self.assertEqual(num2words(567,
+                         lang='et'), 'viissada kuuskümmend seitse')
+        self.assertEqual(num2words(891,
+                         lang='et'), 'kaheksasada üheksakümmend üks')
+        self.assertEqual(
+            num2words(999, lang='et'), 'üheksasada üheksakümmend üheksa')
+
     def test_cardinal_thousands(self):
         """Test thousands in Estonian."""
         self.assertEqual(num2words(1000, lang='et'), 'tuhat')
@@ -96,10 +100,10 @@ class Num2WordsETTest(TestCase):
         self.assertEqual(num2words(15000, lang='et'), 'viisteist tuhat')
         self.assertEqual(num2words(25000, lang='et'), 'kakskümmend viis tuhat')
         self.assertEqual(num2words(100000, lang='et'), 'ükssada tuhat')
-        self.assertEqual(num2words(999999, lang='et'), 
+        self.assertEqual(num2words(999999, lang='et'),
                          'üheksasada üheksakümmend üheksa tuhat '
                          'üheksasada üheksakümmend üheksa')
-        
+
     def test_cardinal_millions(self):
         """Test millions in Estonian."""
         self.assertEqual(num2words(1000000, lang='et'), 'üks miljon')
@@ -110,13 +114,13 @@ class Num2WordsETTest(TestCase):
                          'ükssada kakskümmend kolm miljonit '
                          'nelisada viiskümmend kuus tuhat '
                          'seitsesada kaheksakümmend üheksa')
-        
+
     def test_cardinal_billions(self):
         """Test billions in Estonian."""
         self.assertEqual(num2words(1000000000, lang='et'), 'üks miljard')
         self.assertEqual(num2words(2000000000, lang='et'), 'kaks miljardit')
         self.assertEqual(num2words(5000000000, lang='et'), 'viis miljardit')
-        
+
     def test_negative_numbers(self):
         """Test negative numbers in Estonian."""
         self.assertEqual(num2words(-1, lang='et'), 'miinus üks')
@@ -124,7 +128,7 @@ class Num2WordsETTest(TestCase):
         self.assertEqual(num2words(-25, lang='et'), 'miinus kakskümmend viis')
         self.assertEqual(num2words(-100, lang='et'), 'miinus ükssada')
         self.assertEqual(num2words(-1000, lang='et'), 'miinus tuhat')
-        
+
     def test_ordinal_basics(self):
         """Test basic ordinal numbers in Estonian."""
         self.assertEqual(num2words(1, lang='et', to='ordinal'), 'esimene')
@@ -137,17 +141,19 @@ class Num2WordsETTest(TestCase):
         self.assertEqual(num2words(8, lang='et', to='ordinal'), 'kaheksas')
         self.assertEqual(num2words(9, lang='et', to='ordinal'), 'üheksas')
         self.assertEqual(num2words(10, lang='et', to='ordinal'), 'kümnes')
-        
+
     def test_ordinal_tens(self):
         """Test ordinal tens in Estonian."""
-        self.assertEqual(num2words(11, lang='et', to='ordinal'), 'üheteistkümnes')
-        self.assertEqual(num2words(12, lang='et', to='ordinal'), 'kaheteistkümnes')
+        self.assertEqual(num2words(11,
+                         lang='et', to='ordinal'), 'üheteistkümnes')
+        self.assertEqual(num2words(12,
+                         lang='et', to='ordinal'), 'kaheteistkümnes')
         self.assertEqual(num2words(20, lang='et', to='ordinal'), 'kahekümnes')
         self.assertEqual(num2words(30, lang='et', to='ordinal'), 'kolmekümnes')
         self.assertEqual(num2words(50, lang='et', to='ordinal'), 'viiekümnes')
         self.assertEqual(num2words(100, lang='et', to='ordinal'), 'sajas')
         self.assertEqual(num2words(1000, lang='et', to='ordinal'), 'tuhandes')
-        
+
     def test_ordinal_num(self):
         """Test ordinal number formatting in Estonian."""
         self.assertEqual(num2words(1, lang='et', to='ordinal_num'), '1.')
@@ -156,7 +162,7 @@ class Num2WordsETTest(TestCase):
         self.assertEqual(num2words(10, lang='et', to='ordinal_num'), '10.')
         self.assertEqual(num2words(21, lang='et', to='ordinal_num'), '21.')
         self.assertEqual(num2words(100, lang='et', to='ordinal_num'), '100.')
-        
+
     def test_currency(self):
         """Test currency in Estonian."""
         self.assertEqual(
@@ -187,18 +193,18 @@ class Num2WordsETTest(TestCase):
             num2words(5.25, lang='et', to='currency', currency='USD'),
             'viis dollarit ja kakskümmend viis senti'
         )
-        
+
     def test_year(self):
         """Test year conversion in Estonian."""
-        self.assertEqual(num2words(1900, lang='et', to='year'), 
+        self.assertEqual(num2words(1900, lang='et', to='year'),
                          'tuhat üheksasada')
-        self.assertEqual(num2words(1999, lang='et', to='year'), 
+        self.assertEqual(num2words(1999, lang='et', to='year'),
                          'tuhat üheksasada üheksakümmend üheksa')
-        self.assertEqual(num2words(2000, lang='et', to='year'), 
+        self.assertEqual(num2words(2000, lang='et', to='year'),
                          'kaks tuhat')
-        self.assertEqual(num2words(2001, lang='et', to='year'), 
+        self.assertEqual(num2words(2001, lang='et', to='year'),
                          'kaks tuhat üks')
-        self.assertEqual(num2words(2020, lang='et', to='year'), 
+        self.assertEqual(num2words(2020, lang='et', to='year'),
                          'kaks tuhat kakskümmend')
-        self.assertEqual(num2words(2023, lang='et', to='year'), 
+        self.assertEqual(num2words(2023, lang='et', to='year'),
                          'kaks tuhat kakskümmend kolm')

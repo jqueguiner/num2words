@@ -33,7 +33,7 @@ class Num2WordsBGTest(TestCase):
         self.assertEqual(num2words(7, lang='bg'), 'седем')
         self.assertEqual(num2words(8, lang='bg'), 'осем')
         self.assertEqual(num2words(9, lang='bg'), 'девет')
-        
+
     def test_cardinal_tens(self):
         """Test tens in Bulgarian."""
         self.assertEqual(num2words(10, lang='bg'), 'десет')
@@ -54,7 +54,7 @@ class Num2WordsBGTest(TestCase):
         self.assertEqual(num2words(70, lang='bg'), 'седемдесет')
         self.assertEqual(num2words(80, lang='bg'), 'осемдесет')
         self.assertEqual(num2words(90, lang='bg'), 'деветдесет')
-        
+
     def test_cardinal_compound_tens(self):
         """Test compound numbers with tens."""
         self.assertEqual(num2words(21, lang='bg'), 'двадесет и един')
@@ -63,7 +63,7 @@ class Num2WordsBGTest(TestCase):
         self.assertEqual(num2words(67, lang='bg'), 'шестдесет и седем')
         self.assertEqual(num2words(89, lang='bg'), 'осемдесет и девет')
         self.assertEqual(num2words(99, lang='bg'), 'деветдесет и девет')
-        
+
     def test_cardinal_hundreds(self):
         """Test hundreds in Bulgarian."""
         self.assertEqual(num2words(100, lang='bg'), 'сто')
@@ -75,17 +75,20 @@ class Num2WordsBGTest(TestCase):
         self.assertEqual(num2words(700, lang='bg'), 'седемстотин')
         self.assertEqual(num2words(800, lang='bg'), 'осемстотин')
         self.assertEqual(num2words(900, lang='bg'), 'деветстотин')
-        
+
     def test_cardinal_complex_hundreds(self):
         """Test complex numbers with hundreds."""
         self.assertEqual(num2words(101, lang='bg'), 'сто един')
         self.assertEqual(num2words(111, lang='bg'), 'сто единадесет')
         self.assertEqual(num2words(212, lang='bg'), 'двеста дванадесет')
         self.assertEqual(num2words(345, lang='bg'), 'триста четиридесет и пет')
-        self.assertEqual(num2words(567, lang='bg'), 'петстотин шестдесет и седем')
-        self.assertEqual(num2words(891, lang='bg'), 'осемстотин деветдесет и един')
-        self.assertEqual(num2words(999, lang='bg'), 'деветстотин деветдесет и девет')
-        
+        self.assertEqual(num2words(567,
+                         lang='bg'), 'петстотин шестдесет и седем')
+        self.assertEqual(num2words(891,
+                         lang='bg'), 'осемстотин деветдесет и един')
+        self.assertEqual(
+            num2words(999, lang='bg'), 'деветстотин деветдесет и девет')
+
     def test_cardinal_thousands(self):
         """Test thousands in Bulgarian."""
         self.assertEqual(num2words(1000, lang='bg'), 'хиляда')
@@ -96,25 +99,29 @@ class Num2WordsBGTest(TestCase):
         self.assertEqual(num2words(15000, lang='bg'), 'петнадесет хиляди')
         self.assertEqual(num2words(25000, lang='bg'), 'двадесет и пет хиляди')
         self.assertEqual(num2words(100000, lang='bg'), 'сто хиляди')
-        self.assertEqual(num2words(999999, lang='bg'), 
-                         'деветстотин деветдесет и девет хиляди деветстотин деветдесет и девет')
-        
+        self.assertEqual(
+            num2words(999999, lang='bg'),
+            'деветстотин деветдесет и девет хиляди '
+            'деветстотин деветдесет и девет')
+
     def test_cardinal_millions(self):
         """Test millions in Bulgarian."""
         self.assertEqual(num2words(1000000, lang='bg'), 'един милион')
         self.assertEqual(num2words(2000000, lang='bg'), 'два милиона')
         self.assertEqual(num2words(5000000, lang='bg'), 'пет милиона')
         self.assertEqual(num2words(15000000, lang='bg'), 'петнадесет милиона')
-        self.assertEqual(num2words(123456789, lang='bg'),
-                         'сто двадесет и три милиона четиристотин петдесет и шест хиляди '
-                         'седемстотин осемдесет и девет')
-        
+        self.assertEqual(
+            num2words(123456789, lang='bg'),
+            'сто двадесет и три милиона '
+            'четиристотин петдесет и шест хиляди '
+            'седемстотин осемдесет и девет')
+
     def test_cardinal_billions(self):
         """Test billions in Bulgarian."""
         self.assertEqual(num2words(1000000000, lang='bg'), 'един милиард')
         self.assertEqual(num2words(2000000000, lang='bg'), 'два милиарда')
         self.assertEqual(num2words(5000000000, lang='bg'), 'пет милиарда')
-        
+
     def test_negative_numbers(self):
         """Test negative numbers in Bulgarian."""
         self.assertEqual(num2words(-1, lang='bg'), 'минус един')
@@ -122,7 +129,7 @@ class Num2WordsBGTest(TestCase):
         self.assertEqual(num2words(-25, lang='bg'), 'минус двадесет и пет')
         self.assertEqual(num2words(-100, lang='bg'), 'минус сто')
         self.assertEqual(num2words(-1000, lang='bg'), 'минус хиляда')
-        
+
     def test_ordinal_basics(self):
         """Test basic ordinal numbers in Bulgarian."""
         self.assertEqual(num2words(1, lang='bg', to='ordinal'), 'първи')
@@ -135,7 +142,7 @@ class Num2WordsBGTest(TestCase):
         self.assertEqual(num2words(8, lang='bg', to='ordinal'), 'осми')
         self.assertEqual(num2words(9, lang='bg', to='ordinal'), 'девети')
         self.assertEqual(num2words(10, lang='bg', to='ordinal'), 'десети')
-        
+
     def test_ordinal_tens(self):
         """Test ordinal tens in Bulgarian."""
         self.assertEqual(num2words(11, lang='bg', to='ordinal'), 'единадесети')
@@ -145,7 +152,7 @@ class Num2WordsBGTest(TestCase):
         self.assertEqual(num2words(50, lang='bg', to='ordinal'), 'петдесети')
         self.assertEqual(num2words(100, lang='bg', to='ordinal'), 'стотен')
         self.assertEqual(num2words(1000, lang='bg', to='ordinal'), 'хиляден')
-        
+
     def test_ordinal_num(self):
         """Test ordinal number formatting in Bulgarian."""
         self.assertEqual(num2words(1, lang='bg', to='ordinal_num'), '1-ви')
@@ -160,7 +167,7 @@ class Num2WordsBGTest(TestCase):
         self.assertEqual(num2words(21, lang='bg', to='ordinal_num'), '21-ви')
         self.assertEqual(num2words(22, lang='bg', to='ordinal_num'), '22-ри')
         self.assertEqual(num2words(100, lang='bg', to='ordinal_num'), '100-ти')
-        
+
     def test_currency(self):
         """Test currency in Bulgarian."""
         self.assertEqual(
@@ -199,20 +206,20 @@ class Num2WordsBGTest(TestCase):
             num2words(5.25, lang='bg', to='currency', currency='USD'),
             'пет долара и двадесет и пет цента'
         )
-        
+
     def test_year(self):
         """Test year conversion in Bulgarian."""
-        self.assertEqual(num2words(1900, lang='bg', to='year'), 
+        self.assertEqual(num2words(1900, lang='bg', to='year'),
                          'хиляда деветстотин')
-        self.assertEqual(num2words(1999, lang='bg', to='year'), 
+        self.assertEqual(num2words(1999, lang='bg', to='year'),
                          'хиляда деветстотин деветдесет и девет')
-        self.assertEqual(num2words(2000, lang='bg', to='year'), 
+        self.assertEqual(num2words(2000, lang='bg', to='year'),
                          'две хиляди')
-        self.assertEqual(num2words(2001, lang='bg', to='year'), 
+        self.assertEqual(num2words(2001, lang='bg', to='year'),
                          'две хиляди един')
-        self.assertEqual(num2words(2020, lang='bg', to='year'), 
+        self.assertEqual(num2words(2020, lang='bg', to='year'),
                          'две хиляди двадесет')
-        self.assertEqual(num2words(2023, lang='bg', to='year'), 
+        self.assertEqual(num2words(2023, lang='bg', to='year'),
                          'две хиляди двадесет и три')
-        self.assertEqual(num2words(2100, lang='bg', to='year'), 
+        self.assertEqual(num2words(2100, lang='bg', to='year'),
                          'две хиляди сто')
