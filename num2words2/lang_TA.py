@@ -48,7 +48,7 @@ class Num2Word_TA(Num2Word_Base):
 
     def __init__(self):
         super(Num2Word_TA, self).__init__()
-        
+
         self.ones = [
             '',
             'ஒன்று',
@@ -61,7 +61,7 @@ class Num2Word_TA(Num2Word_Base):
             'எட்டு',
             'ஒன்பது'
         ]
-        
+
         self.tens = [
             '',
             'பத்து',
@@ -74,7 +74,7 @@ class Num2Word_TA(Num2Word_Base):
             'எண்பது',
             'தொண்ணூறு'
         ]
-        
+
         self.teens = {
             11: 'பதினொன்று',
             12: 'பன்னிரண்டு',
@@ -86,7 +86,7 @@ class Num2Word_TA(Num2Word_Base):
             18: 'பதினெட்டு',
             19: 'பத்தொன்பது'
         }
-        
+
         self.hundreds_special = {
             100: 'நூறு',
             200: 'இருநூறு',
@@ -98,14 +98,14 @@ class Num2Word_TA(Num2Word_Base):
             800: 'எண்ணூறு',
             900: 'தொள்ளாயிரம்'
         }
-        
+
         self.scale = {
             1000: 'ஆயிரம்',
             100000: 'இலட்சம்',
             10000000: 'கோடி',
             1000000000000: 'டிரில்லியன்'
         }
-        
+
         self.ordinals = {
             1: 'முதல்',
             2: 'இரண்டாம்',
@@ -118,7 +118,7 @@ class Num2Word_TA(Num2Word_Base):
             9: 'ஒன்பதாம்',
             10: 'பத்தாம்'
         }
-        
+
         self.negword = "கழித்தல் "
         self.pointword = "புள்ளி"
 
@@ -132,9 +132,9 @@ class Num2Word_TA(Num2Word_Base):
         """
         if n == 0:
             return 'பூஜ்ஜியம்'
-        
+
         parts = []
-        
+
         # Handle crores (1 crore = 10,000,000)
         if n >= 10000000:
             crores = n // 10000000
@@ -143,7 +143,7 @@ class Num2Word_TA(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(crores) + ' கோடி')
             n %= 10000000
-        
+
         # Handle lakhs (1 lakh = 100,000)
         if n >= 100000:
             lakhs = n // 100000
@@ -152,7 +152,7 @@ class Num2Word_TA(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(lakhs) + ' இலட்சம்')
             n %= 100000
-        
+
         # Handle thousands
         if n >= 1000:
             thousands = n // 1000
@@ -161,7 +161,7 @@ class Num2Word_TA(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(thousands) + ' ஆயிரம்')
             n %= 1000
-        
+
         # Handle hundreds with special forms
         if n >= 100:
             hundreds_val = (n // 100) * 100
@@ -170,7 +170,7 @@ class Num2Word_TA(Num2Word_Base):
             else:
                 parts.append(self.ones[n // 100] + ' நூறு')
             n %= 100
-        
+
         # Handle special case for teens (11-19)
         if 10 < n < 20:
             parts.append(self.teens[n])
@@ -180,31 +180,31 @@ class Num2Word_TA(Num2Word_Base):
                 tens_val = n // 10
                 parts.append(self.tens[tens_val])
                 n %= 10
-            
+
             # Handle ones
             if n > 0:
                 parts.append(self.ones[n])
-        
+
         return ' '.join(parts)
 
     def _int_to_cardinal(self, n):
         if n == 0:
             return 'பூஜ்ஜியம்'
-        
+
         if n < 0:
             return self.negword + self._int_to_word(-n)
-        
+
         return self._int_to_word(n)
 
     def _int_to_ordinal(self, n):
         """Convert to ordinal number."""
         if n == 0:
             return 'பூஜ்ஜியம்'
-        
+
         # Special cases for first ten ordinals
         if n in self.ordinals:
             return self.ordinals[n]
-        
+
         # For other numbers, add "-ஆவது" suffix
         return self._int_to_cardinal(n) + 'ஆவது'
 
@@ -212,61 +212,61 @@ class Num2Word_TA(Num2Word_Base):
         try:
             if isinstance(n, str):
                 n = int(n)
-            
+
             return self._int_to_cardinal(n)
-        except:
+        except BaseException:
             return self._int_to_cardinal(int(n))
 
     def to_ordinal(self, n):
         try:
             if isinstance(n, str):
                 n = int(n)
-            
+
             return self._int_to_ordinal(n)
-        except:
+        except BaseException:
             return self._int_to_ordinal(int(n))
 
     def to_ordinal_num(self, n):
         try:
             if isinstance(n, str):
                 n = int(n)
-            
+
             # In Tamil, ordinal numbers use "-ஆவது" suffix
             # But for numeric form, use -வது
             return str(n) + '-வது'
-        except:
+        except BaseException:
             return str(n) + '-வது'
 
     def to_currency(self, n, currency='INR'):
         try:
             left, right, is_negative = parse_currency_parts(n)
-            
+
             if currency not in self.CURRENCY_FORMS:
                 raise NotImplementedError(
                     'Currency code "%s" not implemented for "%s"' %
                     (currency, self.__class__.__name__))
-            
+
             cr_major, cr_minor = self.CURRENCY_FORMS[currency]
-            
+
             result = []
-            
+
             if is_negative:
                 result.append(self.negword.strip())
-            
+
             left_words = self._int_to_cardinal(left)
             result.append(left_words)
             result.append(cr_major[0])
-            
+
             # Handle paise/cents if non-zero
             if right > 0:
                 right_words = self._int_to_cardinal(right)
                 result.append(right_words)
                 result.append(cr_minor[0])
-            
+
             return ' '.join(result)
         except NotImplementedError:
             raise
-        except:
+        except BaseException:
             return str(n) + ' ' + currency
 
     def to_year(self, n):

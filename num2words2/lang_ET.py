@@ -48,7 +48,7 @@ class Num2Word_ET(Num2Word_Base):
 
     def __init__(self):
         super(Num2Word_ET, self).__init__()
-        
+
         self.ones = [
             '',
             'üks',
@@ -61,7 +61,7 @@ class Num2Word_ET(Num2Word_Base):
             'kaheksa',
             'üheksa'
         ]
-        
+
         self.tens = [
             '',
             'kümme',
@@ -74,7 +74,7 @@ class Num2Word_ET(Num2Word_Base):
             'kaheksakümmend',
             'üheksakümmend'
         ]
-        
+
         self.scale = {
             100: 'sada',
             1000: 'tuhat',
@@ -82,7 +82,7 @@ class Num2Word_ET(Num2Word_Base):
             1000000000: 'miljard',
             1000000000000: 'triljon'
         }
-        
+
         self.ordinals_ones = [
             '',
             'esimene',
@@ -95,7 +95,7 @@ class Num2Word_ET(Num2Word_Base):
             'kaheksas',
             'üheksas'
         ]
-        
+
         self.ordinals_tens = [
             '',
             'kümnes',
@@ -108,7 +108,7 @@ class Num2Word_ET(Num2Word_Base):
             'kaheksakümnes',
             'üheksakümnes'
         ]
-        
+
         self.negword = "miinus "
         self.pointword = "koma"
 
@@ -121,9 +121,9 @@ class Num2Word_ET(Num2Word_Base):
         """
         if n == 0:
             return 'null'
-        
+
         parts = []
-        
+
         # Handle trillions
         if n >= 1000000000000:
             trillions = n // 1000000000000
@@ -132,7 +132,7 @@ class Num2Word_ET(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(trillions) + ' triljonit')
             n %= 1000000000000
-        
+
         # Handle billions
         if n >= 1000000000:
             billions = n // 1000000000
@@ -141,7 +141,7 @@ class Num2Word_ET(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(billions) + ' miljardit')
             n %= 1000000000
-        
+
         # Handle millions
         if n >= 1000000:
             millions = n // 1000000
@@ -150,7 +150,7 @@ class Num2Word_ET(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(millions) + ' miljonit')
             n %= 1000000
-        
+
         # Handle thousands
         if n >= 1000:
             thousands = n // 1000
@@ -159,7 +159,7 @@ class Num2Word_ET(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(thousands) + ' tuhat')
             n %= 1000
-        
+
         # Handle hundreds
         if n >= 100:
             hundreds = n // 100
@@ -182,7 +182,7 @@ class Num2Word_ET(Num2Word_Base):
             elif hundreds == 9:
                 parts.append('üheksasada')
             n %= 100
-        
+
         # Handle special case for teens (11-19)
         if 10 < n < 20:
             teens_map = {
@@ -203,33 +203,33 @@ class Num2Word_ET(Num2Word_Base):
                 tens_val = n // 10
                 parts.append(self.tens[tens_val])
                 n %= 10
-            
+
             # Handle ones
             if n > 0:
                 parts.append(self.ones[n])
-        
+
         return ' '.join(parts)
 
     def _int_to_cardinal(self, n):
         if n == 0:
             return 'null'
-        
+
         if n < 0:
             return self.negword + self._int_to_word(-n)
-        
+
         return self._int_to_word(n)
 
     def _int_to_ordinal(self, n):
         """Convert to ordinal number."""
         if n == 0:
             return 'nullis'
-        
+
         if n < 10:
             return self.ordinals_ones[n]
-        
+
         if n == 10:
             return 'kümnes'
-        
+
         if n < 20:
             teens_ordinals = {
                 11: 'üheteistkümnes',
@@ -243,7 +243,7 @@ class Num2Word_ET(Num2Word_Base):
                 19: 'üheksateistkümnes'
             }
             return teens_ordinals[n]
-        
+
         if n < 100:
             tens_val = n // 10
             ones_val = n % 10
@@ -252,13 +252,13 @@ class Num2Word_ET(Num2Word_Base):
             else:
                 # For compound numbers, make the last part ordinal
                 return self.tens[tens_val] + ' ' + self.ordinals_ones[ones_val]
-        
+
         if n == 100:
             return 'sajas'
-        
+
         if n == 1000:
             return 'tuhandes'
-        
+
         # For larger numbers, convert to cardinal and add 's' suffix
         cardinal = self._int_to_cardinal(n)
         return cardinal + 's'
@@ -267,70 +267,70 @@ class Num2Word_ET(Num2Word_Base):
         try:
             if isinstance(n, str):
                 n = int(n)
-            
+
             return self._int_to_cardinal(n)
-        except:
+        except BaseException:
             return self._int_to_cardinal(int(n))
 
     def to_ordinal(self, n):
         try:
             if isinstance(n, str):
                 n = int(n)
-            
+
             return self._int_to_ordinal(n)
-        except:
+        except BaseException:
             return self._int_to_ordinal(int(n))
 
     def to_ordinal_num(self, n):
         try:
             if isinstance(n, str):
                 n = int(n)
-            
+
             return str(n) + '.'
-        except:
+        except BaseException:
             return str(n) + '.'
 
     def to_currency(self, n, currency='EUR'):
         try:
             left, right, is_negative = parse_currency_parts(n)
-            
+
             if currency not in self.CURRENCY_FORMS:
                 raise NotImplementedError(
                     'Currency code "%s" not implemented for "%s"' %
                     (currency, self.__class__.__name__))
-            
+
             cr_major, cr_minor = self.CURRENCY_FORMS[currency]
-            
+
             result = []
-            
+
             if is_negative:
                 result.append(self.negword.strip())
-            
+
             left_words = self._int_to_cardinal(left)
             result.append(left_words)
-            
+
             # Plural form for major currency
             if left == 1:
                 result.append(cr_major[0])
             else:
                 result.append(cr_major[1])
-            
+
             # Handle cents if non-zero
             if right > 0:
                 result.append('ja')
                 right_words = self._int_to_cardinal(right)
                 result.append(right_words)
-                
+
                 # Plural form for minor currency
                 if right == 1:
                     result.append(cr_minor[0])
                 else:
                     result.append(cr_minor[1])
-            
+
             return ' '.join(result)
         except NotImplementedError:
             raise
-        except:
+        except BaseException:
             return str(n) + ' ' + currency
 
     def to_year(self, n):

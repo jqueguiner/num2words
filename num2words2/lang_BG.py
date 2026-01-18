@@ -39,7 +39,7 @@ class Num2Word_BG(Num2Word_Base):
 
     def __init__(self):
         super(Num2Word_BG, self).__init__()
-        
+
         self.ones = {
             0: 'нула',
             1: 'едно',
@@ -52,17 +52,17 @@ class Num2Word_BG(Num2Word_Base):
             8: 'осем',
             9: 'девет'
         }
-        
+
         self.ones_masculine = {
             1: 'един',
             2: 'два'
         }
-        
+
         self.ones_feminine = {
             1: 'една',
             2: 'две'
         }
-        
+
         self.tens = {
             10: 'десет',
             11: 'единадесет',
@@ -83,7 +83,7 @@ class Num2Word_BG(Num2Word_Base):
             80: 'осемдесет',
             90: 'деветдесет'
         }
-        
+
         self.scale = {
             100: ('сто', 'ста'),
             1000: ('хиляда', 'хиляди'),
@@ -91,7 +91,7 @@ class Num2Word_BG(Num2Word_Base):
             1000000000: ('милиард', 'милиарда'),
             1000000000000: ('трилион', 'трилиона')
         }
-        
+
         self.ordinals = {
             1: 'първи',
             2: 'втори',
@@ -123,7 +123,7 @@ class Num2Word_BG(Num2Word_Base):
             100: 'стотен',
             1000: 'хиляден'
         }
-        
+
         self.negword = "минус "
         self.pointword = "точка"
 
@@ -140,9 +140,9 @@ class Num2Word_BG(Num2Word_Base):
         """
         if n == 0:
             return self.ones[0]
-        
+
         parts = []
-        
+
         # Handle billions
         if n >= 1000000000:
             billions = n // 1000000000
@@ -153,7 +153,7 @@ class Num2Word_BG(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(billions) + ' милиарда')
             n %= 1000000000
-        
+
         # Handle millions
         if n >= 1000000:
             millions = n // 1000000
@@ -164,7 +164,7 @@ class Num2Word_BG(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(millions) + ' милиона')
             n %= 1000000
-        
+
         # Handle thousands
         if n >= 1000:
             thousands = n // 1000
@@ -175,7 +175,7 @@ class Num2Word_BG(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(thousands) + ' хиляди')
             n %= 1000
-        
+
         # Handle hundreds
         if n >= 100:
             hundreds = n // 100
@@ -188,7 +188,7 @@ class Num2Word_BG(Num2Word_Base):
             else:
                 parts.append(self.ones[hundreds] + 'стотин')
             n %= 100
-        
+
         # Handle tens and ones
         if n >= 20:
             tens = (n // 10) * 10
@@ -211,25 +211,25 @@ class Num2Word_BG(Num2Word_Base):
                 parts.append(self.ones_masculine[n])
             else:
                 parts.append(self.ones[n])
-        
+
         return ' '.join(parts)
 
     def _int_to_cardinal(self, n):
         if n == 0:
             return self.ones[0]
-        
+
         if n < 0:
             return self.negword + self._int_to_word(-n)
-        
+
         return self._int_to_word(n, masculine=True)
 
     def _int_to_ordinal(self, n):
         if n in self.ordinals:
             return self.ordinals[n]
-        
+
         # For complex numbers, form ordinal by adding -ти/-ен to cardinal
         cardinal = self._int_to_cardinal(n)
-        
+
         # Handle different endings
         if cardinal.endswith('един'):
             return cardinal[:-4] + 'първи'
@@ -246,28 +246,28 @@ class Num2Word_BG(Num2Word_Base):
         try:
             if isinstance(n, str):
                 n = int(n)
-            
+
             if n < 0:
                 return self.negword + self.to_cardinal(-n)
-            
+
             return self._int_to_cardinal(n)
-        except:
+        except BaseException:
             return self._int_to_cardinal(int(n))
 
     def to_ordinal(self, n):
         try:
             if isinstance(n, str):
                 n = int(n)
-            
+
             return self._int_to_ordinal(n)
-        except:
+        except BaseException:
             return self._int_to_ordinal(int(n))
 
     def to_ordinal_num(self, n):
         try:
             if isinstance(n, str):
                 n = int(n)
-            
+
             # Bulgarian ordinal suffixes
             if n % 100 in [11, 12, 13, 14, 15, 16, 17, 18, 19]:
                 return str(n) + '-ти'
@@ -279,25 +279,25 @@ class Num2Word_BG(Num2Word_Base):
                 return str(n) + '-ми'
             else:
                 return str(n) + '-ти'
-        except:
+        except BaseException:
             return str(n) + '-ти'
 
     def to_currency(self, n, currency='BGN'):
         try:
             left, right, is_negative = parse_currency_parts(n)
-            
+
             if currency not in self.CURRENCY_FORMS:
                 raise NotImplementedError(
                     'Currency code "%s" not implemented for "%s"' %
                     (currency, self.__class__.__name__))
-            
+
             cr_major, cr_minor = self.CURRENCY_FORMS[currency]
-            
+
             result = []
-            
+
             if is_negative:
                 result.append(self.negword.strip())
-            
+
             # Handle major currency with appropriate gender
             if currency == 'EUR':
                 # EUR uses neuter forms (default ones)
@@ -306,18 +306,20 @@ class Num2Word_BG(Num2Word_Base):
                 elif left == 2:
                     left_words = 'две'
                 else:
-                    left_words = self._int_to_word(left, masculine=False, feminine=False)
+                    left_words = self._int_to_word(
+                        left, masculine=False, feminine=False)
             else:
                 # BGN, USD, GBP use masculine forms
-                left_words = self._int_to_word(left, masculine=True, feminine=False)
+                left_words = self._int_to_word(
+                    left, masculine=True, feminine=False)
             result.append(left_words)
-            
+
             # Plural form for major currency
             if left == 1:
                 result.append(cr_major[0])
             else:
                 result.append(cr_major[1])
-            
+
             # Handle cents if non-zero
             if right > 0:
                 result.append('и')
@@ -329,17 +331,17 @@ class Num2Word_BG(Num2Word_Base):
                 else:
                     right_words = self._int_to_cardinal(right)
                     result.append(right_words)
-                
+
                 # Plural form for minor currency
                 if right == 1:
                     result.append(cr_minor[0])
                 else:
                     result.append(cr_minor[1])
-            
+
             return ' '.join(result)
         except NotImplementedError:
             raise
-        except:
+        except BaseException:
             return str(n) + ' ' + currency
 
     def to_year(self, n):
@@ -353,7 +355,7 @@ class Num2Word_BG(Num2Word_Base):
                 result = 'хиляда'
             else:
                 result = self._int_to_cardinal(thousands) + ' хиляди'
-            
+
             if remainder > 0:
                 result += ' ' + self._int_to_cardinal(remainder)
             return result

@@ -48,7 +48,7 @@ class Num2Word_MS(Num2Word_Base):
 
     def __init__(self):
         super(Num2Word_MS, self).__init__()
-        
+
         self.ones = [
             '',
             'satu',
@@ -61,7 +61,7 @@ class Num2Word_MS(Num2Word_Base):
             'lapan',
             'sembilan'
         ]
-        
+
         self.tens = [
             '',
             'sepuluh',
@@ -74,7 +74,7 @@ class Num2Word_MS(Num2Word_Base):
             'lapan puluh',
             'sembilan puluh'
         ]
-        
+
         self.teens = {
             11: 'sebelas',
             12: 'dua belas',
@@ -86,7 +86,7 @@ class Num2Word_MS(Num2Word_Base):
             18: 'lapan belas',
             19: 'sembilan belas'
         }
-        
+
         self.scale = {
             100: 'ratus',
             1000: 'ribu',
@@ -94,7 +94,7 @@ class Num2Word_MS(Num2Word_Base):
             1000000000: 'bilion',
             1000000000000: 'trilion'
         }
-        
+
         self.ordinals = [
             '',
             'pertama',
@@ -108,7 +108,7 @@ class Num2Word_MS(Num2Word_Base):
             'kesembilan',
             'kesepuluh'
         ]
-        
+
         self.negword = "negatif "
         self.pointword = "titik"
 
@@ -121,9 +121,9 @@ class Num2Word_MS(Num2Word_Base):
         """
         if n == 0:
             return 'kosong'
-        
+
         parts = []
-        
+
         # Handle trillions
         if n >= 1000000000000:
             trillions = n // 1000000000000
@@ -132,7 +132,7 @@ class Num2Word_MS(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(trillions) + ' trilion')
             n %= 1000000000000
-        
+
         # Handle billions
         if n >= 1000000000:
             billions = n // 1000000000
@@ -141,7 +141,7 @@ class Num2Word_MS(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(billions) + ' bilion')
             n %= 1000000000
-        
+
         # Handle millions
         if n >= 1000000:
             millions = n // 1000000
@@ -150,7 +150,7 @@ class Num2Word_MS(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(millions) + ' juta')
             n %= 1000000
-        
+
         # Handle thousands
         if n >= 1000:
             thousands = n // 1000
@@ -159,7 +159,7 @@ class Num2Word_MS(Num2Word_Base):
             else:
                 parts.append(self._int_to_word(thousands) + ' ribu')
             n %= 1000
-        
+
         # Handle hundreds
         if n >= 100:
             hundreds = n // 100
@@ -168,7 +168,7 @@ class Num2Word_MS(Num2Word_Base):
             else:
                 parts.append(self.ones[hundreds] + ' ratus')
             n %= 100
-        
+
         # Handle special case for teens (11-19)
         if 10 < n < 20:
             parts.append(self.teens[n])
@@ -181,31 +181,31 @@ class Num2Word_MS(Num2Word_Base):
                     tens_val = n // 10
                     parts.append(self.tens[tens_val])
                 n %= 10
-            
+
             # Handle ones
             if n > 0:
                 parts.append(self.ones[n])
-        
+
         return ' '.join(parts)
 
     def _int_to_cardinal(self, n):
         if n == 0:
             return 'kosong'
-        
+
         if n < 0:
             return self.negword + self._int_to_word(-n)
-        
+
         return self._int_to_word(n)
 
     def _int_to_ordinal(self, n):
         """Convert to ordinal number."""
         if n == 0:
             return 'kosong'
-        
+
         # Special cases for first ten ordinals
         if n <= 10:
             return self.ordinals[n]
-        
+
         # For other numbers, use "ke-" prefix
         return 'ke-' + self._int_to_cardinal(n)
 
@@ -213,60 +213,60 @@ class Num2Word_MS(Num2Word_Base):
         try:
             if isinstance(n, str):
                 n = int(n)
-            
+
             return self._int_to_cardinal(n)
-        except:
+        except BaseException:
             return self._int_to_cardinal(int(n))
 
     def to_ordinal(self, n):
         try:
             if isinstance(n, str):
                 n = int(n)
-            
+
             return self._int_to_ordinal(n)
-        except:
+        except BaseException:
             return self._int_to_ordinal(int(n))
 
     def to_ordinal_num(self, n):
         try:
             if isinstance(n, str):
                 n = int(n)
-            
+
             # In Malay, ordinal numbers use "ke-" prefix
             return 'ke-' + str(n)
-        except:
+        except BaseException:
             return 'ke-' + str(n)
 
     def to_currency(self, n, currency='MYR'):
         try:
             left, right, is_negative = parse_currency_parts(n)
-            
+
             if currency not in self.CURRENCY_FORMS:
                 raise NotImplementedError(
                     'Currency code "%s" not implemented for "%s"' %
                     (currency, self.__class__.__name__))
-            
+
             cr_major, cr_minor = self.CURRENCY_FORMS[currency]
-            
+
             result = []
-            
+
             if is_negative:
                 result.append(self.negword.strip())
-            
+
             left_words = self._int_to_cardinal(left)
             result.append(left_words)
             result.append(cr_major[0])
-            
+
             # Handle cents if non-zero
             if right > 0:
                 right_words = self._int_to_cardinal(right)
                 result.append(right_words)
                 result.append(cr_minor[0])
-            
+
             return ' '.join(result)
         except NotImplementedError:
             raise
-        except:
+        except BaseException:
             return str(n) + ' ' + currency
 
     def to_year(self, n):
@@ -274,7 +274,8 @@ class Num2Word_MS(Num2Word_Base):
         if n < 1000:
             return self._int_to_cardinal(n)
         elif n < 2000:
-            # Years like 1999 -> "seribu sembilan ratus sembilan puluh sembilan"
+            # Years like 1999 -> "seribu sembilan ratus sembilan puluh
+            # sembilan"
             return self._int_to_cardinal(n)
         else:
             # Years like 2023 -> "dua ribu dua puluh tiga"
