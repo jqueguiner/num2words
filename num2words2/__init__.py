@@ -26,8 +26,9 @@ from . import (lang_AF, lang_AM, lang_AR, lang_AZ, lang_BE, lang_BG, lang_BN,
                lang_IT, lang_JA, lang_KN, lang_KO, lang_KZ, lang_LT, lang_LV,
                lang_MN, lang_MS, lang_NL, lang_NO, lang_PL, lang_PT, lang_PT_BR,
                lang_RO, lang_RU, lang_SK, lang_SL, lang_SN, lang_SQ, lang_SR,
-               lang_SV, lang_SW, lang_TE, lang_TET, lang_TG, lang_TH, lang_TR,
-               lang_UK, lang_VI, lang_ZH, lang_ZH_CN, lang_ZH_HK, lang_ZH_TW)
+               lang_SV, lang_SW, lang_TA, lang_TE, lang_TET, lang_TG, lang_TH,
+               lang_TR, lang_UK, lang_VI, lang_ZH, lang_ZH_CN, lang_ZH_HK,
+               lang_ZH_TW)
 
 CONVERTER_CLASSES = {
     'af': lang_AF.Num2Word_AF(),
@@ -92,6 +93,7 @@ CONVERTER_CLASSES = {
     'sr': lang_SR.Num2Word_SR(),
     'sv': lang_SV.Num2Word_SV(),
     'sw': lang_SW.Num2Word_SW(),
+    'ta': lang_TA.Num2Word_TA(),
     'te': lang_TE.Num2Word_TE(),
     'tet': lang_TET.Num2Word_TET(),
     'tg': lang_TG.Num2Word_TG(),
