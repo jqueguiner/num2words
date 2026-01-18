@@ -1,6 +1,6 @@
 # Add new language
 
-for each new language you must create a file `lang_NN.py` where `NN` is the 
+for each new language you must create a file `lang_NN.py` where `NN` is the
 ISO 639-1 or ISO 639-3 [language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes).
 
 This class must be a subclass of `Num2Word_EU` and implement at least the following methods
@@ -67,4 +67,3 @@ run `tox` and `coverage` to check that the code is well formated and all parts o
 tox
 python3 -m coverage report -m
 ```
-

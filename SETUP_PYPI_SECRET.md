@@ -19,7 +19,7 @@ The secret should appear in the list as `PYPI_API_TOKEN` with a green checkmark.
 
 ### Automatic Publishing (python-publish.yml)
 - **Trigger**: When CI tests pass on master branch
-- **Process**: 
+- **Process**:
   1. Waits for CI workflow to complete successfully
   2. Checks if current version exists on PyPI
   3. If version exists, auto-increments patch version

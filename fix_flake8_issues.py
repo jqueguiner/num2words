@@ -4,15 +4,15 @@
 import os
 import re
 
+
 def fix_blank_lines(file_path):
     """Fix E302 errors (expected 2 blank lines before class/function)"""
     with open(file_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
-    
-    modified = False
+
     new_lines = []
     i = 0
-    
+
     while i < len(lines):
         # Check for import followed by class definition
         if i > 0 and lines[i].strip().startswith('class '):
@@ -22,10 +22,10 @@ def fix_blank_lines(file_path):
             while j >= 0 and lines[j].strip() == '':
                 blank_count += 1
                 j -= 1
-            
+
             # Check if previous non-blank line is an import or comment
-            if j >= 0 and (lines[j].strip().startswith(('import ', 'from ')) or 
-                          lines[j].strip().startswith('#')):
+            if j >= 0 and (lines[j].strip().startswith(('import ', 'from ')) or
+                           lines[j].strip().startswith('#')):
                 # Need exactly 2 blank lines
                 if blank_count != 2:
                     # Remove existing blank lines
@@ -34,11 +34,10 @@ def fix_blank_lines(file_path):
                     # Add exactly 2 blank lines
                     new_lines.append('\n')
                     new_lines.append('\n')
-                    modified = True
-        
+
         new_lines.append(lines[i])
         i += 1
-    
+
     # Remove trailing whitespace and fix W292/W293
     final_lines = []
     for line in new_lines:
@@ -49,13 +48,13 @@ def fix_blank_lines(file_path):
         else:
             line = '\n'
         final_lines.append(line)
-    
+
     # Ensure file ends with newline
     if final_lines and not final_lines[-1].endswith('\n'):
         final_lines[-1] += '\n'
     elif not final_lines:
         final_lines = ['\n']
-    
+
     # Write back if modified
     if True:  # Always write to ensure proper formatting
         with open(file_path, 'w', encoding='utf-8') as f:
@@ -63,14 +62,15 @@ def fix_blank_lines(file_path):
         return True
     return False
 
+
 def fix_long_lines(file_path):
     """Fix E501 errors (line too long)"""
     with open(file_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
-    
+
     modified = False
     new_lines = []
-    
+
     for line in lines:
         stripped = line.rstrip()
         if len(stripped) > 79:
@@ -118,22 +118,23 @@ def fix_long_lines(file_path):
                     new_lines.append(' ' * (indent + 4) + match.group(2) + line[match.end():])
                     modified = True
                     continue
-            
+
             # Default: add line as-is if we can't fix it automatically
             new_lines.append(line)
         else:
             new_lines.append(line)
-    
+
     if modified:
         with open(file_path, 'w', encoding='utf-8') as f:
             f.writelines(new_lines)
         return True
     return False
 
+
 # Files to fix based on flake8 output
 files_to_fix = [
     'num2words2/lang_AF.py',
-    'num2words2/lang_EL.py', 
+    'num2words2/lang_EL.py',
     'num2words2/lang_HA.py',
     'num2words2/lang_HR.py',
     'num2words2/lang_SN.py',

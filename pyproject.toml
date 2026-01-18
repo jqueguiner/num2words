@@ -15,8 +15,8 @@ authors = [
 maintainers = [
     {name = "Jean-Louis Queguiner", email = "jean-louis.queguiner@gmail.com"}
 ]
-keywords = ["number", "word", "numbers", "words", "convert", "conversion", 
-            "i18n", "localisation", "localization", "internationalisation", 
+keywords = ["number", "word", "numbers", "words", "convert", "conversion",
+            "i18n", "localisation", "localization", "internationalisation",
             "internationalization"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",

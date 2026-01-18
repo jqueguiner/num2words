@@ -51,17 +51,17 @@ class Num2WordBaseTest(TestCase):
         self.assertEqual(
             self.base.title("one"),
             "one"
-            )
+        )
         self.base.is_title = True
         self.assertEqual(
             self.base.title("one"),
             "One"
-            )
+        )
         self.base.exclude_title.append('one')
         self.assertEqual(
             self.base.title("one"),
             "one"
-            )
+        )
 
     def test_set_high_numwords_not_implemented(self):
         with self.assertRaises(NotImplementedError):

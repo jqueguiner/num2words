@@ -52,7 +52,6 @@ MAX_NUMBER = 9999999999999999999999999999999999999999999999999999999999999999999
 
 class NumberTooLargeError(Exception):
     """Custom exception for numbers that are too large."""
-    pass
 
 
 class Num2Word_BN:

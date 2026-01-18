@@ -53,6 +53,57 @@ tox -e py39
 tox -v
 ```
 
+## Pre-commit Hooks Setup
+
+### Automatic Code Formatting and Linting
+
+The project uses pre-commit hooks to automatically format and lint code before commits. This ensures consistent code quality across all contributions.
+
+#### Installing pre-commit:
+```bash
+# Install pre-commit
+pip install pre-commit
+
+# Install the git hook scripts in your repository
+pre-commit install
+```
+
+#### What's included:
+- **trailing-whitespace**: Removes trailing whitespace
+- **end-of-file-fixer**: Ensures files end with a newline
+- **check-yaml**: Validates YAML file syntax
+- **check-added-large-files**: Prevents large files from being committed
+- **check-merge-conflicts**: Checks for merge conflict markers
+- **isort**: Sorts and formats imports
+- **autoflake**: Removes unused imports and variables
+- **autopep8**: Formats code to PEP 8 standards
+- **flake8**: Checks code style and quality
+
+#### Manual usage:
+```bash
+# Run on all files
+pre-commit run --all-files
+
+# Run on staged files (default behavior on commit)
+pre-commit run
+
+# Run specific hook
+pre-commit run flake8 --all-files
+
+# Update hooks to latest versions
+pre-commit autoupdate
+
+# Skip hooks temporarily (not recommended)
+git commit --no-verify
+```
+
+#### Fixing issues:
+If pre-commit fails:
+1. Most issues are automatically fixed by autopep8 and autoflake
+2. Review the changes with `git diff`
+3. Stage the fixed files with `git add`
+4. Commit again
+
 ## Prerequisites
 
 ### For pyenv method:
@@ -60,7 +111,7 @@ tox -v
    ```bash
    # macOS
    brew install pyenv
-   
+
    # Linux/WSL
    curl https://pyenv.run | bash
    ```
@@ -68,7 +119,7 @@ tox -v
 2. **Install Python versions:**
    ```bash
    pyenv install 3.8.19
-   pyenv install 3.9.19  
+   pyenv install 3.9.19
    pyenv install 3.10.14
    pyenv install 3.11.9
    pyenv install 3.12.4
@@ -117,7 +168,7 @@ tox -v
 #### test_local.sh
 ```bash
 ./test_local.sh pyenv      # Test with pyenv (default)
-./test_local.sh tox        # Test with tox 
+./test_local.sh tox        # Test with tox
 ./test_local.sh docker     # Test with Docker
 ```
 
@@ -135,7 +186,7 @@ python test_all_python_versions.py --method docker --versions 3.12,3.13
 # Check pyenv installation
 pyenv --version
 
-# Check available versions  
+# Check available versions
 pyenv versions
 
 # Install missing version
@@ -190,7 +241,7 @@ tox -e py38,py39,py310,py311,py312,py313
 ## Performance Tips
 
 1. **Use pyenv for fastest testing** (reuses environments)
-2. **Use tox for standardized testing** (creates fresh environments)  
+2. **Use tox for standardized testing** (creates fresh environments)
 3. **Use Docker for maximum isolation** (slower but most reliable)
 4. **Run `make test-quick` for rapid feedback** during development
 5. **Use `make test-all` before commits** to catch version issues

@@ -192,7 +192,7 @@ If you prefer manual migration, simply update your imports:
 # Before
 from num2words import num2words
 
-# After  
+# After
 from num2words2 import num2words
 ```
 
@@ -302,7 +302,7 @@ This project is licensed under the GNU Lesser General Public License v2.1 - see 
 
 **Original Library History:**
 - **pynum2word** (2003) - Created by Taro Ogawa
-- **Lithuanian support** (2011) - Added by Marius Grigaitis  
+- **Lithuanian support** (2011) - Added by Marius Grigaitis
 - **num2words** - Re-published by Virgil Dupras, Savoir-faire Linux
 - **num2words2** (2025) - Modern fork by Jean-Louis Queguiner for AI/ML applications
 

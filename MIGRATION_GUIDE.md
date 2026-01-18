@@ -112,7 +112,7 @@ Update CI configuration files:
 
 **tox.ini:**
 ```diff
-deps = 
+deps =
 -    num2words
 +    num2words2
 ```
@@ -130,14 +130,14 @@ def test_basic_functionality():
     # Cardinal numbers
     assert num2words(42) == "forty-two"
     assert num2words(1000) == "one thousand"
-    
+
     # Different languages
     assert num2words(42, lang='es') == "cuarenta y dos"
     assert num2words(42, lang='fr') == "quarante-deux"
-    
+
     # Ordinal numbers
     assert num2words(42, to='ordinal') == "forty-second"
-    
+
     # Currency
     result = num2words(42.50, to='currency', lang='en')
     assert 'forty' in result and 'fifty' in result
@@ -146,7 +146,7 @@ def test_edge_cases():
     """Test edge cases and bug fixes"""
     # Test negative numbers (fixed in num2words2)
     assert num2words(-1, lang='bn') == 'ঋণাত্মক এক'
-    
+
     # Test float handling (improved in num2words2)
     assert num2words(1.5, lang='en') == 'one point five'
 
@@ -240,7 +240,7 @@ from .compatibility import num2words
 from flask import Flask
 from num2words import num2words
 
-# After  
+# After
 from flask import Flask
 from num2words2 import num2words
 
@@ -258,7 +258,7 @@ from fastapi import FastAPI
 from num2words import num2words
 
 # After
-from fastapi import FastAPI  
+from fastapi import FastAPI
 from num2words2 import num2words
 
 app = FastAPI()
@@ -340,7 +340,7 @@ print(f"Converted 10,000 numbers in {end - start:.2f} seconds")
 ### Getting Help
 
 - **Documentation:** https://github.com/jqueguiner/num2words
-- **Issues:** https://github.com/jqueguiner/num2words/issues  
+- **Issues:** https://github.com/jqueguiner/num2words/issues
 - **Discussions:** https://github.com/jqueguiner/num2words/discussions
 
 ## Migration Checklist
@@ -352,7 +352,7 @@ Use this checklist to ensure complete migration:
   - [ ] Identified requirements files to update
   - [ ] Checked Docker/CI configurations
 
-- [ ] **Automated Migration**  
+- [ ] **Automated Migration**
   - [ ] Downloaded migration script
   - [ ] Ran dry-run to preview changes
   - [ ] Applied migration script

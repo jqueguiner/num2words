@@ -386,7 +386,7 @@ TEST_CASES_YEAR = [
     (1812, "mil wyth un dau"),
     (2012, "dwy fil deuddeg"),
     (2023, "dwy fil tri ar hugain")
-    ]
+]
 
 TEST_CASES_DECIMALS = [
     (123.4567, "cant a thri ar hugain pwynt pedwar pump chwech saith")

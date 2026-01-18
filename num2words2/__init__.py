@@ -17,17 +17,18 @@
 
 from __future__ import unicode_literals
 
-from . import (lang_AF, lang_AM, lang_AR, lang_AZ, lang_BE, lang_BN, lang_CA,
-               lang_CE, lang_CS, lang_CY, lang_DA, lang_DE, lang_EL, lang_EN,
-               lang_EN_IN, lang_EN_NG, lang_EO, lang_ES, lang_ES_CO,
-               lang_ES_CR, lang_ES_GT, lang_ES_NI, lang_ES_VE, lang_FA,
-               lang_FI, lang_FR, lang_FR_BE, lang_FR_CH, lang_FR_DZ, lang_HA,
-               lang_HE, lang_HI, lang_HR, lang_HU, lang_HY, lang_ID, lang_IS,
-               lang_IT, lang_JA, lang_KN, lang_KO, lang_KZ, lang_LT, lang_LV,
-               lang_MN, lang_NL, lang_NO, lang_PL, lang_PT, lang_PT_BR,
-               lang_RO, lang_RU, lang_SK, lang_SL, lang_SN, lang_SQ, lang_SR,
-               lang_SV, lang_SW, lang_TE, lang_TET, lang_TG, lang_TH, lang_TR,
-               lang_UK, lang_VI, lang_ZH, lang_ZH_CN, lang_ZH_HK, lang_ZH_TW)
+from . import (lang_AF, lang_AM, lang_AR, lang_AZ, lang_BE, lang_BG, lang_BN,
+               lang_CA, lang_CE, lang_CS, lang_CY, lang_DA, lang_DE, lang_EL,
+               lang_EN, lang_EN_IN, lang_EN_NG, lang_EO, lang_ES, lang_ES_CO,
+               lang_ES_CR, lang_ES_GT, lang_ES_NI, lang_ES_VE, lang_ET,
+               lang_FA, lang_FI, lang_FR, lang_FR_BE, lang_FR_CH, lang_FR_DZ,
+               lang_HA, lang_HE, lang_HI, lang_HR, lang_HU, lang_HY, lang_ID,
+               lang_IS, lang_IT, lang_JA, lang_KN, lang_KO, lang_KZ, lang_LT,
+               lang_LV, lang_MN, lang_MS, lang_NL, lang_NO, lang_PL, lang_PT,
+               lang_PT_BR, lang_RO, lang_RU, lang_SK, lang_SL, lang_SN,
+               lang_SQ, lang_SR, lang_SV, lang_SW, lang_TA, lang_TE, lang_TET,
+               lang_TG, lang_TH, lang_TR, lang_UK, lang_VI, lang_ZH,
+               lang_ZH_CN, lang_ZH_HK, lang_ZH_TW)
 
 CONVERTER_CLASSES = {
     'af': lang_AF.Num2Word_AF(),
@@ -35,6 +36,7 @@ CONVERTER_CLASSES = {
     'ar': lang_AR.Num2Word_AR(),
     'az': lang_AZ.Num2Word_AZ(),
     'be': lang_BE.Num2Word_BE(),
+    'bg': lang_BG.Num2Word_BG(),
     'bn': lang_BN.Num2Word_BN(),
     'ca': lang_CA.Num2Word_CA(),
     'ce': lang_CE.Num2Word_CE(),
@@ -53,6 +55,7 @@ CONVERTER_CLASSES = {
     'es_GT': lang_ES_GT.Num2Word_ES_GT(),
     'es_NI': lang_ES_NI.Num2Word_ES_NI(),
     'es_VE': lang_ES_VE.Num2Word_ES_VE(),
+    'et': lang_ET.Num2Word_ET(),
     'fa': lang_FA.Num2Word_FA(),
     'fi': lang_FI.Num2Word_FI(),
     'fr': lang_FR.Num2Word_FR(),
@@ -75,6 +78,7 @@ CONVERTER_CLASSES = {
     'lt': lang_LT.Num2Word_LT(),
     'lv': lang_LV.Num2Word_LV(),
     'mn': lang_MN.Num2Word_MN(),
+    'ms': lang_MS.Num2Word_MS(),
     'nl': lang_NL.Num2Word_NL(),
     'no': lang_NO.Num2Word_NO(),
     'pl': lang_PL.Num2Word_PL(),
@@ -89,6 +93,7 @@ CONVERTER_CLASSES = {
     'sr': lang_SR.Num2Word_SR(),
     'sv': lang_SV.Num2Word_SV(),
     'sw': lang_SW.Num2Word_SW(),
+    'ta': lang_TA.Num2Word_TA(),
     'te': lang_TE.Num2Word_TE(),
     'tet': lang_TET.Num2Word_TET(),
     'tg': lang_TG.Num2Word_TG(),

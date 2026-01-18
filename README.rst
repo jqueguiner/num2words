@@ -11,10 +11,10 @@ num2words2 library - Convert numbers to words in multiple languages
     :target: https://coveralls.io/github/jqueguiner/num2words?branch=master
 
 
-``num2words2`` is a modern, actively maintained fork of the original num2words library 
-that converts numbers like ``42`` to words like ``forty-two``. It supports multiple 
-languages (see the list below for full list of languages) and can even generate 
-ordinal numbers like ``forty-second``. This fork was created to address the maintenance 
+``num2words2`` is a modern, actively maintained fork of the original num2words library
+that converts numbers like ``42`` to words like ``forty-two``. It supports multiple
+languages (see the list below for full list of languages) and can even generate
+ordinal numbers like ``forty-second``. This fork was created to address the maintenance
 gap in the original project and optimize for modern AI/LLM/speech applications.
 
 The project is hosted on GitHub_. Contributions are welcome.
@@ -40,6 +40,28 @@ To run the full CI test suite which includes linting and multiple python environ
 
     pip install tox
     tox
+
+Development Setup
+-----------------
+The project uses pre-commit hooks to ensure code quality. To set up your development environment::
+
+    # Install pre-commit
+    pip install pre-commit
+
+    # Install the git hook scripts
+    pre-commit install
+
+    # Run hooks on all files (optional, useful for initial setup)
+    pre-commit run --all-files
+
+This will automatically format and lint your code before each commit using:
+
+* autopep8 - PEP 8 formatting
+* autoflake - removes unused imports and variables
+* isort - sorts imports
+* flake8 - style and quality checks
+* trailing-whitespace removal
+* end-of-file fixing
 
 Usage
 -----
@@ -168,7 +190,7 @@ in 2003. Unfortunately, the library stopped being maintained and the author
 can't be reached. There was another developer, Marius Grigaitis, who in 2011
 added Lithuanian support, but didn't take over maintenance of the project.
 
-Virgil Dupras from Savoir-faire Linux based himself on Marius Grigaitis' improvements 
+Virgil Dupras from Savoir-faire Linux based himself on Marius Grigaitis' improvements
 and re-published ``pynum2word`` as ``num2words``.
 
 ``num2words2`` Fork
@@ -178,7 +200,7 @@ and re-published ``pynum2word`` as ``num2words``.
 the maintenance gap and optimize for modern AI/LLM/speech applications. This fork:
 
 * Provides active maintenance aligned with rapidly evolving AI/ML ecosystem
-* Fixes critical bugs affecting machine learning pipelines  
+* Fixes critical bugs affecting machine learning pipelines
 * Adds enhanced language support for global AI applications
 * Maintains backward compatibility with the original library
 
