@@ -70,7 +70,7 @@ This document tracks the implementation status of all languages for the num2word
 | Luxembourgish | lb | ❌ Not Implemented | - |
 | Macedonian | mk | ❌ Not Implemented | - |
 | Malagasy | mg | ❌ Not Implemented | - |
-| Malay | ms | ❌ Not Implemented | - |
+| Malay | ms | ✅ Implemented | lang_MS.py |
 | Malayalam | ml | ❌ Not Implemented | - |
 | Maltese | mt | ❌ Not Implemented | - |
 | Maori | mi | ❌ Not Implemented | - |
@@ -128,8 +128,8 @@ This document tracks the implementation status of all languages for the num2word
 ## Statistics
 
 - **Total Languages**: 104
-- **Implemented**: 62 (60%)
-- **Not Implemented**: 42 (40%)
+- **Implemented**: 63 (61%)
+- **Not Implemented**: 41 (39%)
 
 ## Missing Languages to Implement
 
@@ -153,8 +153,7 @@ The following languages are not yet implemented:
 18. Luxembourgish (lb)
 19. Macedonian (mk)
 20. Malagasy (mg)
-21. Malay (ms)
-22. Malayalam (ml)
+21. Malayalam (ml)
 23. Maltese (mt)
 24. Maori (mi)
 25. Marathi (mr)
