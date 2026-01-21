@@ -37,6 +37,15 @@ from . import (lang_AF, lang_AM, lang_AR, lang_AS, lang_AZ, lang_BA, lang_BE,
                lang_VI, lang_WO, lang_YI, lang_YO, lang_ZH_CN, lang_ZH_HK,
                lang_ZH_TW)
 
+# Version information
+try:
+    from ._version import __version__, __version_tuple__
+except ImportError:
+    # Package is not installed, provide defaults
+    __version__ = "unknown"
+    __version_tuple__ = (0, 0, 0, "unknown", 0)
+
+
 CONVERTER_CLASSES = {
     'af': lang_AF.Num2Word_AF(),
     'am': lang_AM.Num2Word_AM(),
