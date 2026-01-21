@@ -52,3 +52,7 @@ num2words2 = ["*.py"]
 write_to = "num2words2/_version.py"
 version_scheme = "release-branch-semver"
 local_scheme = "no-local-version"
+write_to_template = '''# Auto-generated version file
+__version__ = "{version}"
+__version_tuple__ = {version_tuple}
+'''
