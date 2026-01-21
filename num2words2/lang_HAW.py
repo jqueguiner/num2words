@@ -24,7 +24,6 @@ from .base import Num2Word_Base
 class Num2Word_HAW(Num2Word_Base):
     CURRENCY_FORMS = {
         'USD': (('kālā', 'kālā'), ('keneka', 'keneka')),
-        'USD': (('dollar', 'dollars'), ('cent', 'cents')),
         'EUR': (('euro', 'euros'), ('cent', 'cents'))
     }
 

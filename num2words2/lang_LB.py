@@ -24,8 +24,7 @@ from .base import Num2Word_Base
 class Num2Word_LB(Num2Word_Base):
     CURRENCY_FORMS = {
         'EUR': (('euro', 'euro'), ('cent', 'cents')),
-        'USD': (('dollar', 'dollars'), ('cent', 'cents')),
-        'EUR': (('euro', 'euros'), ('cent', 'cents'))
+        'USD': (('dollar', 'dollars'), ('cent', 'cents'))
     }
 
     def setup(self):
