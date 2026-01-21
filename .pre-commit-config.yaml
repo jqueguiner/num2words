@@ -43,3 +43,15 @@ repos:
           "--max-line-length=79"
         ]
         additional_dependencies: [flake8-copyright]
+
+  # Custom E2E tests hook - quick version for pre-commit
+  - repo: local
+    hooks:
+      - id: e2e-quick-tests
+        name: E2E Quick Tests (100 samples)
+        entry: python run_e2e_tests.py --quick
+        language: system
+        pass_filenames: false
+        stages: [commit]
+        verbose: true
+        description: Run quick E2E tests on first 100 cases

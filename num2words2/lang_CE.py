@@ -379,6 +379,10 @@ class Num2Word_CE(Num2Word_EUR):
                 result = self.negword + " " + result
             return result
 
+        # Handle negative integers
+        elif number < 0:
+            return self.negword + " " + self.to_cardinal(abs(number), clazz=clazz, case=case)
+
         elif number < 20:
             return self.makecase(number, case, clazz)
         elif number < 100:
@@ -474,7 +478,13 @@ class Num2Word_CE(Num2Word_EUR):
             str: Formatted string
 
         """
-        left, right, is_negative = parse_currency_parts(val)
+        # Check if value has fractional cents
+        from decimal import Decimal
+        decimal_val = Decimal(str(val))
+        has_fractional_cents = (decimal_val * 100) % 1 != 0
+
+        left, right, is_negative = parse_currency_parts(val, is_int_with_cents=False,
+                                                        keep_precision=has_fractional_cents)
 
         try:
             cr1, cr2 = self.CURRENCY_FORMS[currency]
@@ -488,11 +498,20 @@ class Num2Word_CE(Num2Word_EUR):
 
         minus_str = "%s " % self.negword.strip() if is_negative else ""
         money_str = self._money_verbose(left, currency, case)
-        cents_str = (
-            self._cents_verbose(right, currency, case)
-            if cents
-            else self._cents_terse(right, currency)
-        )
+        # Handle fractional cents
+        from decimal import Decimal
+        if isinstance(right, Decimal):
+            # Convert fractional cents (e.g., 65.3 cents)
+            if cents:
+                cents_str = self.to_cardinal(float(right), case=case)
+            else:
+                cents_str = str(float(right))
+        else:
+            cents_str = (
+                self._cents_verbose(right, currency, case)
+                if cents
+                else self._cents_terse(right, currency)
+            )
 
         return "%s%s %s%s %s %s" % (
             minus_str,
