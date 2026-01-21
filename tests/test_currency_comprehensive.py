@@ -218,14 +218,14 @@ class CurrencyMatrixValidation(unittest.TestCase):
             try:
                 result = num2words(10, lang=lang, to='currency', currency='USD')
                 self.assertIsNotNone(result)
-            except:
+            except Exception:
                 pass  # Some might not be fully implemented
 
         for lang in eur_langs:
             try:
                 result = num2words(10, lang=lang, to='currency', currency='EUR')
                 self.assertIsNotNone(result)
-            except:
+            except Exception:
                 pass  # Some might not be fully implemented
 
     def test_least_supported_currency(self):
@@ -237,7 +237,7 @@ class CurrencyMatrixValidation(unittest.TestCase):
             try:
                 result = num2words(100, lang=lang, to='currency', currency='CHF')
                 self.assertIsNotNone(result)
-            except:
+            except Exception:
                 pass  # Some might not be fully implemented
 
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import argparse
 import os
 import shutil
@@ -6,7 +7,6 @@ import sys
 import tempfile
 from pathlib import Path
 
-#!/usr/bin/env python3
 """
 Local testing script for num2words2 across multiple Python versions
 

@@ -34,8 +34,8 @@ from . import (lang_AF, lang_AM, lang_AR, lang_AS, lang_AZ, lang_BA, lang_BE,
                lang_SK, lang_SL, lang_SN, lang_SO, lang_SQ, lang_SR, lang_SU,
                lang_SV, lang_SW, lang_TA, lang_TE, lang_TET, lang_TG, lang_TH,
                lang_TK, lang_TL, lang_TR, lang_TT, lang_UK, lang_UR, lang_UZ,
-               lang_VI, lang_WO, lang_YI, lang_YO, lang_ZH, lang_ZH_CN,
-               lang_ZH_HK, lang_ZH_TW)
+               lang_VI, lang_WO, lang_YI, lang_YO, lang_ZH_CN, lang_ZH_HK,
+               lang_ZH_TW)
 
 CONVERTER_CLASSES = {
     'af': lang_AF.Num2Word_AF(),

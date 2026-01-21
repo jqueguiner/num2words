@@ -210,7 +210,7 @@ def print_summary(results: TestResult, detailed: bool = False):
     total = results.passed + results.failed + results.errors + results.skipped
 
     print(f"\n{'='*80}")
-    print(f"TEST RESULTS SUMMARY")
+    print("TEST RESULTS SUMMARY")
     print(f"{'='*80}\n")
 
     # Overall results
@@ -254,7 +254,7 @@ def print_summary(results: TestResult, detailed: bool = False):
         # Show some failures
         if results.failures:
             print(f"\n{'='*80}")
-            print(f"SAMPLE FAILURES (showing first 10)")
+            print("SAMPLE FAILURES (showing first 10)")
             print(f"{'='*80}")
             for failure in results.failures[:10]:
                 test = failure['test']
@@ -265,7 +265,7 @@ def print_summary(results: TestResult, detailed: bool = False):
         # Show some errors
         if results.errors_list:
             print(f"\n{'='*80}")
-            print(f"SAMPLE ERRORS (showing first 10)")
+            print("SAMPLE ERRORS (showing first 10)")
             print(f"{'='*80}")
             for error_item in results.errors_list[:10]:
                 test = error_item['test']
@@ -282,7 +282,7 @@ def print_summary(results: TestResult, detailed: bool = False):
             print(f"\n⚠️  Tests passed with warnings (success rate {success_rate:.2f}% >= {threshold*100}% threshold)")
             return 0
     else:
-        print(f"\n✅ All tests passed!")
+        print("\n✅ All tests passed!")
         return 0
 
 
