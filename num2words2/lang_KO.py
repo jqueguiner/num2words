@@ -23,9 +23,9 @@ from .currency import parse_currency_parts
 
 class Num2Word_KO(Num2Word_Base):
     CURRENCY_FORMS = {
-        'KRW': ('원', '전'),  # Adding jeon (1/100 won) support
+        'KRW': ('원',),  # KRW doesn't use fractional units
         'USD': ('달러', '센트'),
-        'JPY': ('엔', '전')  # Adding support for JPY decimals
+        'JPY': ('엔',)  # JPY doesn't use fractional units
     }
 
     def set_high_numwords(self, high):
@@ -143,7 +143,9 @@ class Num2Word_KO(Num2Word_Base):
 
         # For currencies without minor units
         if minor is None:
-            # Both integers and floats are treated the same
+            # Raise error if decimals provided for currency without minor unit
+            if not is_integer_input and right > 0:
+                raise ValueError("Currency '%s' does not support decimals" % currency)
             return "%s%s%s" % (minus_str, money_str, major)
 
         # For currencies with minor units
