@@ -105,11 +105,13 @@ def print_progress(current: int, total: int, results: TestResult):
     percent = (current / total) * 100
     bar_length = 40
     filled = int(bar_length * current / total)
-    bar = '█' * filled + '░' * (bar_length - filled)
+
+    # Use ASCII characters for Windows compatibility
+    bar = '=' * filled + '-' * (bar_length - filled)
 
     sys.stdout.write(f'\r[{bar}] {percent:.1f}% | '
-                     f'✓ {results.passed} | ✗ {results.failed} | ⚠ {results.errors} | '
-                     f'⊘ {results.skipped} | [{current}/{total}]')
+                     f'PASS: {results.passed} | FAIL: {results.failed} | ERR: {results.errors} | '
+                     f'SKIP: {results.skipped} | [{current}/{total}]')
     sys.stdout.flush()
 
 
@@ -225,10 +227,10 @@ def print_summary(results: TestResult, detailed: bool = False):
 
     # Overall results
     print(f"Total Tests:    {total:,}")
-    print(f"✓ Passed:       {results.passed:,} ({results.passed/total*100:.1f}%)")
-    print(f"✗ Failed:       {results.failed:,} ({results.failed/total*100:.1f}%)")
-    print(f"⚠ Errors:       {results.errors:,} ({results.errors/total*100:.1f}%)")
-    print(f"⊘ Skipped:      {results.skipped:,} ({results.skipped/total*100:.1f}%)")
+    print(f"Passed:         {results.passed:,} ({results.passed/total*100:.1f}%)")
+    print(f"Failed:         {results.failed:,} ({results.failed/total*100:.1f}%)")
+    print(f"Errors:         {results.errors:,} ({results.errors/total*100:.1f}%)")
+    print(f"Skipped:        {results.skipped:,} ({results.skipped/total*100:.1f}%)")
 
     # Success rate
     success_rate = results.passed / (total - results.skipped) * 100 if (total - results.skipped) > 0 else 0
@@ -244,9 +246,9 @@ def print_summary(results: TestResult, detailed: bool = False):
             total_lang = stats['passed'] + stats['failed'] + stats['errors']
             success = stats['passed'] / total_lang * 100 if total_lang > 0 else 0
             print(f"{lang:10} - Total: {total_lang:6,} | "
-                  f"✓ {stats['passed']:6,} ({success:.1f}%) | "
-                  f"✗ {stats['failed']:6,} | "
-                  f"⚠ {stats['errors']:6,}")
+                  f"PASS: {stats['passed']:6,} ({success:.1f}%) | "
+                  f"FAIL: {stats['failed']:6,} | "
+                  f"ERR: {stats['errors']:6,}")
 
         # Results by conversion type
         print(f"\n{'='*80}")
@@ -257,9 +259,9 @@ def print_summary(results: TestResult, detailed: bool = False):
             total_type = stats['passed'] + stats['failed'] + stats['errors']
             success = stats['passed'] / total_type * 100 if total_type > 0 else 0
             print(f"{conv_type:12} - Total: {total_type:6,} | "
-                  f"✓ {stats['passed']:6,} ({success:.1f}%) | "
-                  f"✗ {stats['failed']:6,} | "
-                  f"⚠ {stats['errors']:6,}")
+                  f"PASS: {stats['passed']:6,} ({success:.1f}%) | "
+                  f"FAIL: {stats['failed']:6,} | "
+                  f"ERR: {stats['errors']:6,}")
 
         # Show some failures
         if results.failures:
@@ -286,13 +288,13 @@ def print_summary(results: TestResult, detailed: bool = False):
     if results.failed > 0 or results.errors > 0:
         threshold = 0.95  # 95% pass threshold
         if success_rate < threshold * 100:
-            print(f"\n❌ Tests failed (success rate {success_rate:.2f}% < {threshold*100}% threshold)")
+            print(f"\n[FAIL] Tests failed (success rate {success_rate:.2f}% < {threshold*100}% threshold)")
             return 1
         else:
-            print(f"\n⚠️  Tests passed with warnings (success rate {success_rate:.2f}% >= {threshold*100}% threshold)")
+            print(f"\n[WARN] Tests passed with warnings (success rate {success_rate:.2f}% >= {threshold*100}% threshold)")
             return 0
     else:
-        print("\n✅ All tests passed!")
+        print("\n[PASS] All tests passed!")
         return 0
 
 
