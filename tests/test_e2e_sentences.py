@@ -23,7 +23,7 @@ class TestNum2WordsSentencesE2E(unittest.TestCase):
     def setUpClass(cls):
         """Load test cases from CSV file"""
         cls.test_cases = []
-        csv_file = Path(__file__).parent.parent / "test_e2e_sentences.csv"
+        csv_file = Path(__file__).parent / "data" / "e2e_test_sentences.csv"
 
         if not csv_file.exists():
             print(
@@ -35,12 +35,24 @@ class TestNum2WordsSentencesE2E(unittest.TestCase):
             with open(csv_file, "r", encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 for row in reader:
+                    # Map CSV fields to expected fields
                     if (
-                        row.get("lang")
-                        and row.get("input_sentence")
+                        row.get("language_code")
+                        and row.get("original_sentence")
                         and row.get("expected_output")
                     ):
-                        cls.test_cases.append(row)
+                        cls.test_cases.append(
+                            {
+                                "lang": row["language_code"],
+                                "input_sentence": row["original_sentence"],
+                                "expected_output": row["expected_output"],
+                                "english_translation": row.get(
+                                    "sentence_translation", ""
+                                ),
+                                "description": row.get("language_name", ""),
+                                "test_type": "e2e",
+                            }
+                        )
 
             print(f"Loaded {len(cls.test_cases)} test cases from {csv_file}")
         except Exception as e:
@@ -249,7 +261,7 @@ def main():
     suite.addTest(unittest.makeSuite(TestNum2WordsSentenceManual))
 
     # Add E2E tests if CSV exists
-    csv_file = Path(__file__).parent.parent / "test_e2e_sentences.csv"
+    csv_file = Path(__file__).parent / "data" / "e2e_test_sentences.csv"
     if csv_file.exists():
         suite.addTest(unittest.makeSuite(TestNum2WordsSentencesE2E))
     else:
