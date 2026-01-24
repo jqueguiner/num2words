@@ -1,0 +1,16 @@
+lang,input_sentence,expected_output,english_translation,description,test_type
+en,I bought 6 apples yesterday,I bought six apples yesterday,I bought 6 apples yesterday,Basic single number conversion,basic
+en,The temperature is -5 degrees,The temperature is minus five degrees,The temperature is -5 degrees,Negative number conversion,negative
+en,The price is 19.99 dollars,The price is nineteen point nine nine dollars,The price is 19.99 dollars,Decimal number conversion,decimal
+en,We have 1000000 users online,We have one million users online,We have 1000000 users online,Large number conversion,large_number
+en,3 cats and 2 dogs live here,Three cats and two dogs live here,3 cats and 2 dogs live here,Number at start of sentence,capitalization
+fr,J'ai acheté 10 pommes,J'ai acheté dix pommes,I bought 10 apples,Basic French number,basic
+fr,Il fait -3 degrés,Il fait moins trois degrés,It is -3 degrees,French negative number,negative
+es,Tengo 25 años,Tengo veinticinco años,I am 25 years old,Spanish age expression,basic
+es,Cuesta 99.50 euros,Cuesta noventa y nueve punto cinco cero euros,It costs 99.50 euros,Spanish decimal price,decimal
+de,Ich habe 7 Bücher,Ich habe sieben Bücher,I have 7 books,German basic number,basic
+ja,私は3匹の猫を飼っています,私は三匹の猫を飼っています,I have 3 cats,Japanese counter word,basic
+zh-cn,我有100元,我有一百元,I have 100 yuan,Chinese currency,basic
+ru,У меня 5 братьев,У меня пять братьев,I have 5 brothers,Russian family members,basic
+ar,لدي 8 كتب,لدي ثمانية كتب,I have 8 books,Arabic books count,basic
+pt,Eu tenho 42 anos,Eu tenho quarenta e dois anos,I am 42 years old,Portuguese age,basic
