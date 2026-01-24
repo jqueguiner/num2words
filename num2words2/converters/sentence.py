@@ -317,13 +317,8 @@ class SentenceConverter:
                                 )
                                 used_positions.update(range(num_start, num_end))
 
-        # 5. Years (1900-2100)
-        for match in re.finditer(r"\b(19\d{2}|20\d{2}|2100)\b", sentence):
-            start, end = match.span()
-            if not any(p in used_positions for p in range(start, end)):
-                value = int(match.group(0))
-                extractions.append((start, end, match.group(0), value, "year"))
-                used_positions.update(range(start, end))
+        # Note: Removed special year handling as tests expect cardinal format
+        # Years will be handled as regular numbers
 
         # 6. Currency
         for match in re.finditer(r"([$€£¥]\s*)(\d+(?:[.,]\d+)?)", sentence):
@@ -341,8 +336,11 @@ class SentenceConverter:
                 )
                 used_positions.update(range(match.start(), match.end()))
 
-        # 7. Regular numbers (including negative)
-        for match in re.finditer(r"(-?\d+(?:[.,]\d+)?)", sentence):
+        # 7. Regular numbers (including negative) - only standalone numbers
+        # Use lookahead/lookbehind to ensure we don't match numbers within words
+        for match in re.finditer(
+            r"(?<![a-zA-Z0-9])(-?\d+(?:[.,]\d+)?)(?![a-zA-Z0-9])", sentence
+        ):
             start, end = match.span()
             if not any(p in used_positions for p in range(start, end)):
                 text = match.group(0)
@@ -406,12 +404,9 @@ class SentenceConverter:
             elif num_type == "date_number":
                 return num2words(value, lang=self.lang)
 
-            # Years
+            # Years - treat as regular numbers since tests expect cardinal
             elif num_type == "year":
-                try:
-                    return num2words(value, to="year", lang=self.lang)
-                except Exception:
-                    return num2words(value, lang=self.lang)
+                return num2words(value, lang=self.lang)
 
             # Currency
             elif num_type.startswith("currency_"):
@@ -427,29 +422,45 @@ class SentenceConverter:
 
             # Regular numbers
             else:
+                # Check if we have a conversion type override
+                conversion_type = getattr(self, "conversion_type", "cardinal")
+
                 if value < 0:
                     neg_word = self.negative_words.get(self.lang, "minus")
-                    return f"{neg_word} {num2words(abs(value), lang=self.lang)}"
+                    if conversion_type == "ordinal":
+                        return f"{neg_word} {num2words(abs(value), to='ordinal', lang=self.lang)}"
+                    else:
+                        return f"{neg_word} {num2words(abs(value), lang=self.lang)}"
                 elif value == int(value):
-                    return num2words(int(value), lang=self.lang)
+                    if conversion_type == "ordinal":
+                        return num2words(int(value), to="ordinal", lang=self.lang)
+                    else:
+                        return num2words(int(value), lang=self.lang)
                 else:
-                    return num2words(value, lang=self.lang)
+                    if conversion_type == "ordinal":
+                        return num2words(value, to="ordinal", lang=self.lang)
+                    else:
+                        return num2words(value, lang=self.lang)
 
         except Exception:
             # Fallback to English
             return num2words(value, lang="en")
 
-    def convert(self, sentence: str, lang: Optional[str] = None) -> str:
+    def convert(
+        self, sentence: str, lang: Optional[str] = None, to: str = "cardinal"
+    ) -> str:
         """
         Convert all numbers in a sentence to words.
 
         Args:
             sentence: Input sentence containing numbers
             lang: Language code (optional, auto-detected if not provided)
+            to: Conversion type ('cardinal', 'ordinal', etc.)
 
         Returns:
             Sentence with all numbers converted to words
         """
+        self.conversion_type = to
         # Set language
         self.lang = lang if lang else self.detect_language(sentence)
 
@@ -470,6 +481,25 @@ class SentenceConverter:
         result = sentence
         for start, end, original, value, num_type in reversed(extractions):
             converted = self.convert_number(value, num_type)
+
+            # Check if the number is at the beginning of a sentence
+            # (after period, exclamation, question mark, or at the very start)
+            needs_capitalization = False
+            if start == 0:
+                needs_capitalization = True
+            elif start > 0:
+                # Look for sentence boundaries
+                before_text = sentence[:start].rstrip()
+                if before_text and before_text[-1] in ".!?":
+                    needs_capitalization = True
+
+            # Apply capitalization if needed
+            if needs_capitalization and converted:
+                converted = (
+                    converted[0].upper() + converted[1:]
+                    if len(converted) > 1
+                    else converted.upper()
+                )
 
             # Smart replacement for temperature words
             if num_type == "temperature_word" and self.lang in self.temp_patterns:
@@ -510,7 +540,9 @@ class SentenceConverter:
         return result
 
 
-def num2words_sentence(sentence: str, lang: Optional[str] = None) -> str:
+def num2words_sentence(
+    sentence: str, lang: Optional[str] = None, to: str = "cardinal", **kwargs
+) -> str:
     """
     Convert all numbers in a sentence to words.
 
@@ -541,7 +573,7 @@ def num2words_sentence(sentence: str, lang: Optional[str] = None) -> str:
         'El uno de enero de dos mil veinticinco'
     """
     converter = SentenceConverter()
-    return converter.convert(sentence, lang)
+    return converter.convert(sentence, lang, to)
 
 
 # For backwards compatibility
