@@ -45,6 +45,9 @@ except ImportError:
     __version__ = "unknown"
     __version_tuple__ = (0, 0, 0, "unknown", 0)
 
+# Export main functions
+__all__ = ['num2words', 'num2words_sentence']
+
 
 CONVERTER_CLASSES = {
     'af': lang_AF.Num2Word_AF(),
@@ -194,3 +197,60 @@ def num2words(number, ordinal=False, lang='en', to='cardinal', **kwargs):
         raise NotImplementedError()
 
     return getattr(converter, 'to_{}'.format(to))(number, **kwargs)
+
+
+def num2words_sentence(sentence, lang='en', to='cardinal', **kwargs):
+    """
+    Convert all numbers in a sentence to their word equivalents.
+    
+    Args:
+        sentence (str): The input sentence containing numbers
+        lang (str): Language code (default: 'en')
+        to (str): Conversion type ('cardinal', 'ordinal', etc.)
+        **kwargs: Additional arguments passed to num2words
+    
+    Returns:
+        str: The sentence with all numbers converted to words
+    
+    Examples:
+        >>> num2words_sentence("I bought 6 apples")
+        "I bought six apples"
+        >>> num2words_sentence("The 1st place winner got 100 dollars", to='ordinal')
+        "The first place winner got one hundredth dollars"
+    """
+    import re
+    
+    def replace_number(match):
+        number_str = match.group(0)
+        try:
+            # Handle decimal numbers
+            if '.' in number_str:
+                number = float(number_str)
+            else:
+                number = int(number_str)
+            
+            # Convert the number to words
+            word = num2words(number, lang=lang, to=to, **kwargs)
+            
+            # Preserve capitalization if at beginning of sentence
+            if match.start() == 0:
+                # Beginning of sentence - capitalize first letter
+                word = word[0].upper() + word[1:] if word else word
+            elif match.start() > 1 and sentence[match.start() - 2:match.start()] in ('. ', '! ', '? '):
+                # After sentence-ending punctuation - capitalize
+                word = word[0].upper() + word[1:] if word else word
+            
+            return word
+        except:
+            # If conversion fails, keep the original
+            return number_str
+    
+    # Pattern to match numbers (including decimals)
+    # Matches: integers, decimals, and negative numbers
+    # Use lookahead/lookbehind to avoid matching numbers within words
+    pattern = r'(?<![a-zA-Z0-9])-?\d+\.?\d*(?![a-zA-Z0-9])'
+    
+    # Replace all numbers in the sentence
+    result = re.sub(pattern, replace_number, sentence)
+    
+    return result
