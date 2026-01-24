@@ -55,19 +55,19 @@ jobs:
     - name: Quick E2E Test (PR/Push)
       if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
       run: |
-        python tests/test_e2e_with_sentence_function.py
+        PYTHONPATH=${{ github.workspace }}:$PYTHONPATH python tests/test_e2e_with_sentence_function.py
       continue-on-error: ${{ matrix.python-version == 'pypy-3.9' || matrix.python-version == 'pypy-3.10' }}
 
     - name: Full E2E Test (Scheduled)
       if: github.event_name == 'schedule'
       run: |
-        python tests/test_e2e_with_sentence_function.py
+        PYTHONPATH=${{ github.workspace }}:$PYTHONPATH python tests/test_e2e_with_sentence_function.py
       continue-on-error: ${{ matrix.python-version == 'pypy-3.9' || matrix.python-version == 'pypy-3.10' }}
 
     - name: Custom E2E Test (Manual)
       if: github.event_name == 'workflow_dispatch'
       run: |
-        python tests/test_e2e_with_sentence_function.py
+        PYTHONPATH=${{ github.workspace }}:$PYTHONPATH python tests/test_e2e_with_sentence_function.py
       shell: bash
       continue-on-error: ${{ matrix.python-version == 'pypy-3.9' || matrix.python-version == 'pypy-3.10' }}
 
