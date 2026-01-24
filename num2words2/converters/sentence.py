@@ -317,8 +317,23 @@ class SentenceConverter:
                                 )
                                 used_positions.update(range(num_start, num_end))
 
-        # Note: Removed special year handling as tests expect cardinal format
-        # Years will be handled as regular numbers
+        # 5. Years (1900-2100) ONLY in actual date contexts with month names
+        # Look for years after month names with a comma and day
+        for match in re.finditer(r"\b(19\d{2}|20\d{2}|2100)\b", sentence):
+            start, end = match.span()
+            if not any(p in used_positions for p in range(start, end)):
+                value = int(match.group(0))
+                # Check if this looks like a year in a date context
+                before_text = sentence[:start].strip()
+                # Only treat as year if preceded by "month day," pattern
+                # This ensures we only get dates like "April 5, 2022"
+                if re.search(
+                    r"(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\s+\d+,\s*$",
+                    before_text.lower(),
+                ):
+                    # This looks like a year in a date
+                    extractions.append((start, end, match.group(0), value, "year"))
+                    used_positions.update(range(start, end))
 
         # 6. Currency
         for match in re.finditer(r"([$€£¥]\s*)(\d+(?:[.,]\d+)?)", sentence):
@@ -404,9 +419,13 @@ class SentenceConverter:
             elif num_type == "date_number":
                 return num2words(value, lang=self.lang)
 
-            # Years - treat as regular numbers since tests expect cardinal
+            # Years - use year format for proper conversion
             elif num_type == "year":
-                return num2words(value, lang=self.lang)
+                try:
+                    return num2words(value, to="year", lang=self.lang)
+                except Exception:
+                    # Fallback to regular cardinal if year format not supported
+                    return num2words(value, lang=self.lang)
 
             # Currency
             elif num_type.startswith("currency_"):
