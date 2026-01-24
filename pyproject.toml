@@ -56,3 +56,16 @@ write_to_template = '''# Auto-generated version file
 __version__ = "{version}"
 __version_tuple__ = {version_tuple}
 '''
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.autoflake]
+remove-all-unused-imports = true
+remove-unused-variables = true
+remove-duplicate-keys = true
+ignore-init-module-imports = true
