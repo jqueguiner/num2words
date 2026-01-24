@@ -43,7 +43,7 @@ Repository = "https://github.com/jqueguiner/num2words.git"
 num2words2 = "num2words2.__main__:main"
 
 [tool.setuptools]
-packages = ["num2words2"]
+packages = ["num2words2", "num2words2.converters"]
 
 [tool.setuptools.package-data]
 num2words2 = ["*.py"]
