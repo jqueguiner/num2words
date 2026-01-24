@@ -146,6 +146,15 @@ except ImportError:
     __version_tuple__ = (0, 0, 0, "unknown", 0)
 
 
+# Version information
+try:
+    from ._version import __version__, __version_tuple__
+except ImportError:
+    # Package is not installed, provide defaults
+    __version__ = "unknown"
+    __version_tuple__ = (0, 0, 0, "unknown", 0)
+
+
 CONVERTER_CLASSES = {
     "af": lang_AF.Num2Word_AF(),
     "am": lang_AM.Num2Word_AM(),
