@@ -111,6 +111,27 @@ class SentenceConverter:
             "sv": "minus",
             "da": "minus",
             "no": "minus",
+            "ja": "マイナス",
+            "ar": "سالب",
+            "zh": "负",
+            "zh-cn": "负",
+            "ko": "마이너스",
+            "hi": "माइनस",
+            "tr": "eksi",
+            "hu": "mínusz",
+            "cs": "mínus",
+            "sk": "mínus",
+            "he": "מינוס",
+            "th": "ติดลบ",
+            "vi": "âm",
+            "uk": "мінус",
+            "bg": "минус",
+            "hr": "minus",
+            "lt": "minus",
+            "lv": "mīnus",
+            "et": "miinus",
+            "fi": "miinus",
+            "is": "mínus",
         }
 
     def detect_language(self, text: str) -> str:
@@ -197,26 +218,37 @@ class SentenceConverter:
                     used_positions.update(range(start, end))
 
         # 3. Standalone ordinal numbers (1st, 2nd, 3rd, 4th, etc.) - must come before dates
-        if self.lang == "en":
-            for match in re.finditer(r"(\d+)(?:st|nd|rd|th)\b", sentence):
-                # Check if it's followed by a month name (if so, skip - will be handled as date)
-                after_text = (
-                    sentence[match.end() : match.end() + 20]
-                    if match.end() < len(sentence)
-                    else ""
-                )
-                if not re.match(
-                    r"\s*(?:January|February|March|April|May|June|July|August|September|October|November|December)",
-                    after_text,
-                    re.I,
-                ):
-                    start, end = match.span()
-                    if not any(p in used_positions for p in range(start, end)):
-                        value = int(match.group(1))
-                        extractions.append(
-                            (start, end, match.group(0), value, "ordinal")
-                        )
-                        used_positions.update(range(start, end))
+        ordinal_patterns = {
+            "en": r"(\d+)(?:st|nd|rd|th)\b",
+            "fr": r"(\d+)(?:er|ère|e|ème)\b",
+            "es": r"(\d+)(?:º|°|ª)\b",
+            "de": r"(\d+)(?:\.|te|er)\b",
+            "it": r"(\d+)(?:º|°|ª)\b",
+            "pt": r"(\d+)(?:º|°|ª)\b",
+        }
+
+        if self.lang in ordinal_patterns:
+            pattern = ordinal_patterns[self.lang]
+            for match in re.finditer(pattern, sentence):
+                # For English, check if it's followed by a month name (if so, skip - will be handled as date)
+                if self.lang == "en":
+                    after_text = (
+                        sentence[match.end() : match.end() + 20]
+                        if match.end() < len(sentence)
+                        else ""
+                    )
+                    if re.match(
+                        r"\s*(?:January|February|March|April|May|June|July|August|September|October|November|December)",
+                        after_text,
+                        re.I,
+                    ):
+                        continue
+
+                start, end = match.span()
+                if not any(p in used_positions for p in range(start, end)):
+                    value = int(match.group(1))
+                    extractions.append((start, end, match.group(0), value, "ordinal"))
+                    used_positions.update(range(start, end))
 
         # 4. Dates with ordinals (language-specific)
         # Month names for date detection
