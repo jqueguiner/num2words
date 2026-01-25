@@ -226,7 +226,7 @@ class SentenceConverter:
             "it": r"(\d+)(?:º|°|ª)\b",
             "pt": r"(\d+)(?:º|°|ª)\b",
         }
-        
+
         if self.lang in ordinal_patterns:
             pattern = ordinal_patterns[self.lang]
             for match in re.finditer(pattern, sentence):
@@ -243,13 +243,11 @@ class SentenceConverter:
                         re.I,
                     ):
                         continue
-                
+
                 start, end = match.span()
                 if not any(p in used_positions for p in range(start, end)):
                     value = int(match.group(1))
-                    extractions.append(
-                        (start, end, match.group(0), value, "ordinal")
-                    )
+                    extractions.append((start, end, match.group(0), value, "ordinal"))
                     used_positions.update(range(start, end))
 
         # 4. Dates with ordinals (language-specific)
