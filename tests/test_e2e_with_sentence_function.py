@@ -9,6 +9,8 @@ import io
 import os
 import sys
 
+from num2words2 import num2words_sentence
+
 # Force UTF-8 encoding for stdout on Windows
 if sys.platform == "win32":
     # Set console code page to UTF-8 on Windows
@@ -18,8 +20,6 @@ if sys.platform == "win32":
         sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
     # Also set environment variable for Python
     os.environ["PYTHONIOENCODING"] = "utf-8"
-
-from num2words2 import num2words_sentence
 
 
 def normalize_text(text):
